@@ -5,7 +5,7 @@ const app = require('express')(),
 
 // ENVIRONMENT
 require('dotenv').config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 // APP SETUP
 // TODO
