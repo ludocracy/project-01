@@ -1,30 +1,36 @@
+// DEPENDENCIES
 const app = require('express')(),
   bodyParser = require('body-parser'),
   Routes = require('./routes');
 
+// ENVIRONMENT
 require('dotenv').config();
-
 const PORT = process.env.PORT;
 
-//
-app.get('/', (req, res) => {
-  res.send('welcome to kollaboscope!');
-})
+// APP SETUP
+// TODO
 
-// app.get('/users')
-// app.get('/users/:id', Routes.Users.getUser);
-// app.post('/users', Routes.Users.createUser);
-// app.get('/users/:id/playlists', Routes.Users.getPlaylists);
+// ROUTES
+// TODO double commented routes are for 'extra' features
+// TODO single commented routes should be uncommented once callbacks are created
+app.get('/', Routes.home);
+
+// // app.get('/users', Routes.Users.getAllUsers)
+// // app.get('/users/:id', Routes.Users.getOneUser);
+// // app.post('/users', Routes.Users.createUser);
+// app.get('/users/:id/playlists', Routes.Users.getAllPlaylists);
 // app.post('/users/:id/playlists', Routes.Users.createPlaylist);
+// //
+// app.get('/playlists/:id', Routes.Playlists.getOnePlaylist);
+// // app.get('/playlists/:id/users', Routes.Playlists.getAllUsers);
+// // app.put('/playlists/:id', Routes.Playlists.updatePlaylist);
+// // app.delete('/playlists/:id', Routes.Playlists.deletePlaylist);
 //
-// app.get('/playlists/:id', Routes.Playlists.getPlaylist);
-// app.get('/playlists/:id/users', Routes.Playlists.get);
-// app.put('/playlists/:id');
-// app.delete('/playlists/:id');
+// app.get('/playlists/:id/songs', Routes.Songs.getAllSongs);
+// app.post('/playlists/:id/songs', Routes.Songs.createSong);
+// app.delete('/playlists/:pid/songs/:sid', Routes.Songs.deleteSong);
 
-app.post('/playlists/:id/songs', () => {})
-app.delete('/playlists/:pid/songs/:sid', () => {})
-
+// START SERVER
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });
