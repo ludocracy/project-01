@@ -26,7 +26,7 @@ app.get('/playlists/:id', Routes.Playlists.getOnePlaylist);
 app.put('/playlists/:id', Routes.Playlists.updatePlaylist);
 app.delete('/playlists/:id', Routes.Playlists.deletePlaylist);
 //
-// app.get('/playlists/:id/songs', Routes.Songs.getAllSongs);
+app.get('/playlists/:id/songs', Routes.Songs.getAllSongs);
 // app.post('/playlists/:id/songs', Routes.Songs.createSong);
 // app.delete('/playlists/:pid/songs/:sid', Routes.Songs.deleteSong);
 
