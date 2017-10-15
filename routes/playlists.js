@@ -6,7 +6,7 @@ const db = require('../models');
 function getOnePlaylist(req, res){
   db.Playlist.findById(req.params.id, function(err, data){
     if(err){
-      console.log('Error retrieving this user.', err);
+      console.log('Error retrieving this playlist.', err);
       res.status(500).send('Internal server error.');
     }else{
       res.json(data);
@@ -14,19 +14,33 @@ function getOnePlaylist(req, res){
   });
 };
 
-//Retrieves the contributors to a playlist TODO: INTEGRATE USERS TO PLAYLIST SCHEMA
-function getAllUsers(req, res){
+// //Retrieves the contributors to a playlist TODO: INTEGRATE USERS TO PLAYLIST SCHEMA
+// function getAllUsers(req, res){
+//   db.Playlist.findById(req.params.id, function(err, data){
+//     if(err){
+//       console.log('Error retrieving the constributors of this playlist.', err);
+//       res.status(500).send('Internal server error.');
+//     }else{
+//       res.status(201).json(data.users);
+//     };
+//   });
+// };
+
+//Updates playlist with a new song
+function updatePlaylist(req, res){
   db.Playlist.findById(req.params.id, function(err, data){
     if(err){
-      console.log('Error retrieving the constributors of this playlist.', err);
+      console.log('Error updating this playlist.', err);
       res.status(500).send('Internal server error.');
     }else{
-      res.status(201).json(data.users);
+    //TODO
     };
   });
 };
 
+
+
 module.exports = {
-  getOnePlaylist: getOnePlaylist,
-  getAllUsers: getAllUsers
+  // getAllUsers: getAllUsers,
+  getOnePlaylist: getOnePlaylist
 };

@@ -23,7 +23,7 @@ app.get('/users/:id/playlists', Routes.Users.getAllPlaylists);
 // //
 app.get('/playlists/:id', Routes.Playlists.getOnePlaylist);
 // // app.get('/playlists/:id/users', Routes.Playlists.getAllUsers);
-// // app.put('/playlists/:id', Routes.Playlists.updatePlaylist);
+app.put('/playlists/:id', Routes.Playlists.updatePlaylist);
 // // app.delete('/playlists/:id', Routes.Playlists.deletePlaylist);
 //
 // app.get('/playlists/:id/songs', Routes.Songs.getAllSongs);
