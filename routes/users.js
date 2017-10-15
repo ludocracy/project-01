@@ -17,9 +17,9 @@ function createUser(req, res){
       res.status(500).send('Internal server error.');
     }else{
       res.status(201).json(data);
-    }
-  })
-}
+    };
+  });
+};
 
 //Retrieves all users and returns them in a JSON object
 function getAllUsers(req, res){
@@ -45,7 +45,21 @@ function getOneUser(req, res){
   });
 };
 
+//Retrieves an array of user's playlists
+function getAllPlaylists(req, res){
+  db.User.findById(req.params.id, function(err, data){
+    if(err){
+      console.log('Error retrieving user\'s playlists', err);
+      res.status(500).send('Internal Server Error.');
+    }else{
+      res.json(data.playlists);
+    }
+  })
+}
+
 module.exports = {
   getAllUsers: getAllUsers,
-  getOneUser: getOneUser
+  getOneUser: getOneUser,
+  createUser: createUser,
+  getAllPlaylists: getAllPlaylists
 };
