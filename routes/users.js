@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const db = require('../models');
 
-//Creates a user
+//Creates a user and returns new user as a JSON object
 function createUser(req, res){
   const newUser = db.User({
     name: req.body.name,
