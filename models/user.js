@@ -5,7 +5,7 @@ const UserSchema = new Schema({
   name: { type: String,
     required: true,
     unique: true },
-  // email: String,
+  email: String,
   passwordHash: { type: String, required: true },
   playlists: [{
     type: Schema.Types.ObjectId,
