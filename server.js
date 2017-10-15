@@ -18,7 +18,7 @@ app.get('/', Routes.home);
 app.get('/users', Routes.Users.getAllUsers);
 app.get('/users/:id', Routes.Users.getOneUser);
 app.post('/users', Routes.Users.createUser);
-// app.get('/users/:id/playlists', Routes.Users.getAllPlaylists);
+app.get('/users/:id/playlists', Routes.Users.getAllPlaylists);
 // app.post('/users/:id/playlists', Routes.Users.createPlaylist);
 // //
 // app.get('/playlists/:id', Routes.Playlists.getOnePlaylist);
