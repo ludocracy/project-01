@@ -10,10 +10,10 @@ const PlaylistSchema = new Schema({
     ref: 'Song'
   }],
   // contributors to the playlist
-  // users: [
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User'
-  // ]
+  users: [
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  ]
 });
 
 module.exports = mongoose.model('Playlist', PlaylistSchema);

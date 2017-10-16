@@ -43,17 +43,17 @@ function getAllPlaylists(req, res){
   });
 };
 
-// //Retrieves the contributors to a playlist TODO: INTEGRATE USERS TO PLAYLIST SCHEMA
-// function getAllUsers(req, res){
-//   db.Playlist.findById(req.params.id, function(err, data){
-//     if(err){
-//       console.log('Error retrieving the constributors of this playlist.', err);
-//       res.status(500).send('Internal server error.');
-//     }else{
-//       res.status(201).json(data.users);
-//     };
-//   });
-// };
+//Retrieves the contributors to a playlist TODO: INTEGRATE USERS TO PLAYLIST SCHEMA
+function getAllUsers(req, res){
+  db.Playlist.findById(req.params.id, function(err, data){
+    if(err){
+      console.log('Error retrieving the constributors of this playlist.', err);
+      res.status(500).send('Internal server error.');
+    }else{
+      res.status(201).json(data.users);
+    };
+  });
+};
 
 //Updates playlist with a new song
 function updatePlaylist(req, res){
@@ -93,7 +93,7 @@ function deletePlaylist(req, res){
 }
 
 module.exports = {
-  // getAllUsers: getAllUsers,
+  getAllUsers: getAllUsers,
   createPlaylist: createPlaylist,
   getOnePlaylist: getOnePlaylist,
   deletePlaylist: deletePlaylist,
