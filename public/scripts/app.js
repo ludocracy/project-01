@@ -1,6 +1,4 @@
-require('dotenv').config();
-
-const URL = process.env.KOLLABOSCOPE_URL || 'http://localhost:3000';
+const URL = 'http://localhost:3000';
 // TODO remove when we implement auth
 let user;
 // end
@@ -52,6 +50,14 @@ function getSongs(playlistId) {
 }
 
 // callbacks
+
+function displaySongs() {
+
+}
+
+function displayPlaylists() {
+
+}
 
 // helpers
 
