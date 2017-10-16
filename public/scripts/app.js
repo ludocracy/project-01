@@ -8,6 +8,15 @@ $(document).ready(function(){
   // pull initial data
   setCurrentUser();
 
+  $('#createPlaylist').click(function (e) {
+    console.log(`'${$('#playlistName').value}'`);
+    let newName = $('#playlistName').text();
+    let newDescr = $('#playlistDescr').text();
+    postPlaylist({
+      name: newName,
+      description: newDescr
+    });
+  });
   // set up event listeners
   // TODO submit playlist
   // TODO select individual playlist
@@ -40,12 +49,13 @@ function getOnePlaylist() {
   });
 }
 
-function postPlaylist(options={}) {
+function postPlaylist(data) {
+  console.log(`postPlaylist(${data.name})`)
   $.ajax({
     method: 'POST',
     url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
-    data: options.data,
+    data: data,
     success: () => {}, // refresh view
     error: onError
   });
