@@ -59,7 +59,7 @@ function getAllPlaylists(req, res){
 
 //Creates a playlist with 'this' user as a contributor
 function createPlaylist(req, res){
-  db.User.findById(req.params.id, function(err, data){
+  db.User.findById(req.params.id, function(err, user){
     if(err){
       console.log('Error retrieving user', err);
       res.status(500).send('Internal Server Error.');
@@ -67,9 +67,12 @@ function createPlaylist(req, res){
       const newPlaylist = db.Playlist({
         name: req.body.name,
         description: req.body.description,
-        songs: [],
-        user: req.params.id
-      })
+        songs: req.body.songs,
+      });
+      //adds user to playlist array
+      newPlaylist.users.push(user);
+      //adds newPlaylist to user's playlists
+      user.playlists.push(newPlaylist);
       newPlaylist.save(function(err, playlist){
         if(err){
           console.log('Error retrieving user', err);
