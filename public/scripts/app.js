@@ -7,7 +7,6 @@ let playlist;
 $(document).ready(function(){
   // pull initial data
   setCurrentUser();
-  getAllPlaylists();
 
   // set up event listeners
   // TODO submit playlist
@@ -22,7 +21,7 @@ $(document).ready(function(){
 function getAllPlaylists() {
   $.ajax({
     method: 'GET',
-    url: `${URL}/users/${user.id}/playlists`,
+    url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
     success: displayPlaylists,
     error: onError
@@ -32,7 +31,7 @@ function getAllPlaylists() {
 function getOnePlaylist() {
   $.ajax({
     method: 'GET',
-    url: `${URL}/users/${user.id}/playlists`,
+    url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
     success: displayPlaylists,
     error: onError
@@ -55,8 +54,8 @@ function displaySongs() {
 
 }
 
-function displayPlaylists() {
-
+function displayPlaylists(res) {
+  $('.playlists-container').text(res);
 }
 
 // helpers
@@ -69,6 +68,7 @@ function setCurrentUser() {
     dataType: 'json',
     success: function (res) {
       user = res[0];
+      getAllPlaylists();
     },
     error: onError
   });
