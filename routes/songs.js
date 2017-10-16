@@ -4,14 +4,10 @@ const db = require('../models');
 
 //Retrieves all songs in playlist and returns them in a JSON object
 function getAllSongs(req, res){
-  db.Playlist.find({}, function(err, data){
-    if(err){
-      console.log('Error retrieving this playlist\'s songs.', err);
-      res.status(500).send('Internal server error.');
-    }else{
-      res.status(201).json(data);
-    };
-  });
+  db.Playlist.findById(req.params.id)
+  .populate('songs').exec(function(err, foundPlaylist){
+    res.json(foundPlaylist.songs);
+  })
 };
 
 function createSong(req, res){
@@ -24,7 +20,7 @@ function createSong(req, res){
         youTubeHash: req.body.youTubeHash,
         user: req.body.user
       })
-      
+
       //adds songs to playlist
       playlist.songs.push(newSong)
 

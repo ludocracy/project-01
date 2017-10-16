@@ -47,14 +47,10 @@ function getOneUser(req, res){
 
 //Retrieves an array of user's playlists
 function getAllPlaylists(req, res){
-  db.User.findById(req.params.id, function(err, data){
-    if(err){
-      console.log('Error retrieving user\'s playlists', err);
-      res.status(500).send('Internal Server Error.');
-    }else{
-      res.json(data.playlists);
-    };
-  });
+  db.User.findById(req.params.id)
+  .populate('playlists').exec(function(err, foundUser){
+    res.json(foundUser.playlists);
+  })
 };
 
 //Creates a playlist with 'this' user as a contributor
