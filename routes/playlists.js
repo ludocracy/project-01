@@ -88,9 +88,9 @@ function deletePlaylist(req, res){
       res.status(500).send('Internal server error.');
     }else{
       res.status(201).send("The record for \'" + playlistName + "\' was deleted.");
-    }
-  })
-}
+    };
+  });
+};
 
 module.exports = {
   getAllUsers: getAllUsers,
