@@ -8,6 +8,14 @@ $(document).ready(function(){
   // pull initial data
   setCurrentUser();
 
+  $('#createPlaylist').click(function (e) {
+    let newName = $('#playlistName').val();
+    let newDescr = $('#playlistDescr').val();
+    postPlaylist({
+      name: newName,
+      description: newDescr
+    });
+  });
   // set up event listeners
   // TODO submit playlist
   // TODO select individual playlist
@@ -15,6 +23,8 @@ $(document).ready(function(){
   // TODO submit song
   // TODO remove song
   // TODO edit playlist name
+
+  // TODO raul
 });
 
 //
@@ -40,12 +50,12 @@ function getOnePlaylist() {
   });
 }
 
-function postPlaylist(options={}) {
+function postPlaylist(data) {
   $.ajax({
     method: 'POST',
     url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
-    data: options.data,
+    data: data,
     success: () => {}, // refresh view
     error: onError
   });
