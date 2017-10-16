@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 const db = require('./models');
 
-// var testUser = new db.User ({
-//   name: "testUser",
-//   passwordHash: "password",
-//   playlist: [testPlaylist]
-// })
-
 var testSong1 = new db.Song ({
   youTubeHash: "https://www.youtube.com/watch?v=28tZ-S1LFok"
 });
@@ -17,39 +11,48 @@ var testSong2 = new db.Song ({
 
 var testPlaylist = new db.Playlist ({
   name: "testPlaylist",
-  description: "this is a seed playlist!",
-  songs: [testSong1, testSong2]
+  description: "this is a seed playlist!"
 });
 
-// testUser.save(function(err, savedUser){
-//   if (err) {
-//     console.log('error saving user');
-//   } else {
-//     console.log('user save success');
-//   }
-// });
-
-
-testSong1.save(function(err, savedSong){
-  if (err) {
-    console.log('error saving song');
-  } else {
-    console.log('song save success', savedSong);
-  }
+var testUser = new db.User ({
+  name: "testUser",
+  passwordHash: "password"
 });
 
-testSong2.save(function(err, savedSong){
-  if (err) {
-    console.log('error saving song');
-  } else {
-    console.log('song save success', savedSong);
-  }
-});
 
-testPlaylist.save(function(err, savedPlaylist){
-  if (err) {
-    console.log('error saving playlist');
-  } else {
-    console.log('playlist save success', savedPlaylist);
-  }
+db.User.remove({}, () => {
+  db.Playlist.remove({}, () => {
+    db.Song.remove({}, () => {
+      testSong1.save(function(err, savedSong1){
+        if (err) {
+          console.log(err);
+        } else {
+          testSong2.save(function(err, savedSong2){
+            if (err) {
+              console.log(err);
+            } else {
+              testPlaylist.songs.push(testSong1);
+              testPlaylist.songs.push(testSong2);
+              testPlaylist.save(function(err, savedPlaylist){
+                if (err) {
+                  console.log(err);
+                } else {
+                  testUser.playlists.push(testPlaylist);
+                  testUser.save(function(err, savedUser) {
+                    if(err) {
+                      console.log(err);
+                    } else {
+                      console.log('success! ', savedUser);
+
+                      process.exit();
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    });
+  });
 });
