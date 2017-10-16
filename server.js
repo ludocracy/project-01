@@ -23,13 +23,14 @@ app.post('/users', Routes.Users.createUser);
 app.get('/users/:id/playlists', Routes.Users.getAllPlaylists);
 // app.post('/users/:id/playlists', Routes.Users.createPlaylist);
 // //
+app.get('/playlists', Routes.Playlists.getAllPlaylists);
 app.get('/playlists/:id', Routes.Playlists.getOnePlaylist);
 // // app.get('/playlists/:id/users', Routes.Playlists.getAllUsers);
 app.put('/playlists/:id', Routes.Playlists.updatePlaylist);
 app.delete('/playlists/:id', Routes.Playlists.deletePlaylist);
 //
 app.get('/playlists/:id/songs', Routes.Songs.getAllSongs);
-// app.post('/playlists/:id/songs', Routes.Songs.createSong);
+app.post('/playlists/:id/songs', Routes.Songs.createSong);
 // app.delete('/playlists/:pid/songs/:sid', Routes.Songs.deleteSong);
 
 // START SERVER
