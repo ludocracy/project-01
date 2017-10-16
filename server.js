@@ -8,7 +8,8 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 
 // APP SETUP
-// TODO
+app.use('views', './views');
+app.use('view engine', 'ejs');
 
 // ROUTES
 // TODO double commented routes are for 'extra' features
