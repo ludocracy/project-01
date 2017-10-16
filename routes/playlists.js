@@ -62,5 +62,6 @@ function deletePlaylist(req, res){
 module.exports = {
   // getAllUsers: getAllUsers,
   getOnePlaylist: getOnePlaylist,
-  deletePlaylist: deletePlaylist
+  deletePlaylist: deletePlaylist,
+  updatePlaylist: updatePlaylist
 };
