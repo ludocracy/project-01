@@ -18,7 +18,7 @@ function createSong(req, res){
     }else{
       const newSong = db.Song({
         youTubeHash: req.body.youTubeHash,
-        user: req.body.user
+        // user: req.body.user
       })
 
       //adds songs to playlist

@@ -15,12 +15,12 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 // ROUTES
-// TODO double commented routes are for 'extra' features
-// TODO single commented routes should be uncommented once callbacks are created
+
 app.get('/', Routes.home);
 
 app.get('/users', Routes.Users.getAllUsers);
 app.get('/users/:id', Routes.Users.getOneUser);
+// app.put('/users/:id', Routes.Users.updateUser);
 app.post('/users', Routes.Users.createUser);
 app.get('/users/:id/playlists', Routes.Users.getAllPlaylists);
 app.post('/users/:id/playlists', Routes.Users.createPlaylist);
