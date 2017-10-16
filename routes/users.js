@@ -53,9 +53,9 @@ function getAllPlaylists(req, res){
       res.status(500).send('Internal Server Error.');
     }else{
       res.json(data.playlists);
-    }
-  })
-}
+    };
+  });
+};
 
 //Creates a playlist with 'this' user as a contributor
 function createPlaylist(req, res){
@@ -76,11 +76,11 @@ function createPlaylist(req, res){
           res.status(500).send('Internal Server Error.');
         }else{
           res.status(201).send(`Created ${req.body.name} successfully`);
-        }
-      })
-    }
-  })
-}
+        };
+      });
+    };
+  });
+};
 
 module.exports = {
   getAllUsers: getAllUsers,

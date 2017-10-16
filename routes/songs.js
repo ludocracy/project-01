@@ -33,7 +33,7 @@ function createSong(req, res){
         }
       })
       data.songs.push(newSong);
-    }
+    };
   });
 };
 
@@ -46,10 +46,10 @@ function deleteSong(req, res){
       }else{
         data.songs.save();
         res.status(201).send('Song was successfully removed from playlist.');
-      }
-    })
-  })
-}
+      };
+    });
+  });
+};
 
 module.exports = {
   getAllSongs: getAllSongs,
