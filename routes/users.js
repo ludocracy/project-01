@@ -23,7 +23,7 @@ function createUser(req, res){
 
 //Retrieves all users and returns them in a JSON object
 function getAllUsers(req, res){
-  db.find({}, function (err, data){
+  db.User.find({}, function (err, data){
     if(err){
       console.log('Error retrieving all users.', err);
       res.status(500).send('Internal server error.');
