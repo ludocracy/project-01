@@ -1,8 +1,8 @@
 module.exports = {
   home: function(req, res) {
-    res.send('welcome to kollaboscope!');
+    res.render('index');
   },
-  
+
   Users: require('./users'),
   Playlists: require('./playlists'),
   Songs: require('./songs'),

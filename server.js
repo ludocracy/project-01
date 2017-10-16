@@ -1,7 +1,8 @@
 // DEPENDENCIES
-const app = require('express')(),
+const express = require('express'),
   bodyParser = require('body-parser'),
-  Routes = require('./routes');
+  Routes = require('./routes'),
+  app = express();
 
 // ENVIRONMENT
 require('dotenv').config();
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 // APP SETUP
 app.set('views', './views');
 app.set('view engine', 'ejs');
+app.use(express.static('public'))
 app.use(bodyParser.json());
 
 // ROUTES
