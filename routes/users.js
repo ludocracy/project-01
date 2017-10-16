@@ -42,10 +42,10 @@ function updateUser(req, res){
         res.status(500).send('Internal server error.');
       }else{
         res.json(data);
-      }
-    })
-  })
-}
+      };
+    });
+  });
+};
 
 //Retrieves all users and returns them in a JSON object
 function getAllUsers(req, res){

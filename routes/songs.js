@@ -10,6 +10,7 @@ function getAllSongs(req, res){
   })
 };
 
+//adds a song to the playlist referenced in the parameter
 function createSong(req, res){
   db.Playlist.findById(req.params.id, function(err, playlist){
     if(err){
@@ -37,6 +38,7 @@ function createSong(req, res){
   });
 };
 
+//deletes a song by its ID in the playlist referenced in the parameter
 function deleteSong(req, res){
   db.Playlist.findById(req.paramas.pid, function(err, data){
     data.songs.findByIdAndRemove(req.params.sid, function(err, song){

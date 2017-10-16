@@ -23,7 +23,7 @@ app.get('/signup', Routes.Users.getSignupPage);
 
 app.get('/users', Routes.Users.getAllUsers);
 app.get('/users/:id', Routes.Users.getOneUser);
-// app.put('/users/:id', Routes.Users.updateUser);
+app.put('/users/:id', Routes.Users.updateUser);
 app.post('/users', Routes.Users.createUser);
 app.get('/users/:id/playlists', Routes.Users.getAllPlaylists);
 app.post('/users/:id/playlists', Routes.Users.createPlaylist);
