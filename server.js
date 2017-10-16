@@ -8,7 +8,9 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 
 // APP SETUP
-// TODO
+app.set('views', './views');
+app.set('view engine', 'ejs');
+app.use(bodyParser.json());
 
 // ROUTES
 // TODO double commented routes are for 'extra' features
@@ -21,6 +23,7 @@ app.post('/users', Routes.Users.createUser);
 app.get('/users/:id/playlists', Routes.Users.getAllPlaylists);
 // app.post('/users/:id/playlists', Routes.Users.createPlaylist);
 // //
+app.post('/playlists', Routes.Playlists.createPlaylist);
 app.get('/playlists/:id', Routes.Playlists.getOnePlaylist);
 // // app.get('/playlists/:id/users', Routes.Playlists.getAllUsers);
 app.put('/playlists/:id', Routes.Playlists.updatePlaylist);
