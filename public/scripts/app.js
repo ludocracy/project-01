@@ -14,6 +14,7 @@ $(document).ready(function(){
   // TODO select individual song
   // TODO submit song
   // TODO remove song
+  // TODO edit playlist name
 });
 
 // ajax calls
@@ -38,12 +39,45 @@ function getOnePlaylist() {
   });
 }
 
-function getSongs(playlistId) {
+function getSongs(options={}) {
   $.ajax({
     method: 'GET',
-    url: `${URL}/playlists/${playlistId}/songs`,
+    url: `${URL}/playlists/${options.playlistId}/songs`,
     dataType: 'json',
     success: displaySongs,
+    error: onError
+  });
+}
+
+function postPlaylist(options={}) {
+  $.ajax({
+    method: 'POST',
+    url: `${URL}/users/${user._id}/playlists`,
+    dataType: 'json',
+    data: options.data,
+    success: () => {},
+    error: onError
+  });
+}
+
+function postSong(options={}) {
+  $.ajax({
+    method: 'POST',
+    url: `${URL}/playlists/${options.playlistId}/songs`,
+    dataType: 'json',
+    data: options.data,
+    success: () => {},
+    error: onError
+  });
+}
+
+function updatePlaylist(options={}) {
+  $.ajax({
+    method: 'PUT',
+    url: `${URL}/playlists/${options.playlistId}`,
+    dataType: 'json',
+    data: options.data,
+    success: () => {},
     error: onError
   });
 }
