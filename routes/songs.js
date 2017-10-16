@@ -15,7 +15,7 @@ function getAllSongs(req, res){
 };
 
 function createSong(req, res){
-  db.Playlist.findById(req.params.id, function(err, data){
+  db.Playlist.findById(req.params.id, function(err, playlist){
     if(err){
       console.log('Error adding this song to playlist.', err);
       res.status(500).send('Internal server error.');
@@ -24,6 +24,10 @@ function createSong(req, res){
         youTubeHash: req.body.youTubeHash,
         user: req.body.user
       })
+      
+      //adds songs to playlist
+      playlist.songs.push(newSong)
+
       newSong.save(function(err, song){
         if(err){
           console.log('Error saving song model to playlist.', err);

@@ -69,10 +69,12 @@ function createPlaylist(req, res){
         description: req.body.description,
         songs: req.body.songs,
       });
+
       //adds user to playlist array
       newPlaylist.users.push(user);
       //adds newPlaylist to user's playlists
       user.playlists.push(newPlaylist);
+      user.save();
       newPlaylist.save(function(err, playlist){
         if(err){
           console.log('Error retrieving user', err);

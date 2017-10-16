@@ -4,11 +4,11 @@ const mongoose = require('mongoose'),
 const SongSchema = new Schema({
   youTubeHash: { type: String, required: true },
   // contributor of this specific song
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  }
+  // user: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true,
+  // }
 });
 
 module.exports = mongoose.model('Song', SongSchema);
