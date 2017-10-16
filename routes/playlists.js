@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const db = require('../models');
 
 //create playlist and returns playlist as JSON object
+//TODO: integrate with User.createPlaylist route
 function createPlaylist(req, res){
   const newPlaylist = db.Playlist ({
     name: req.body.name,
@@ -50,7 +51,11 @@ function updatePlaylist(req, res){
       console.log('Error updating this playlist.', err);
       res.status(500).send('Internal server error.');
     }else{
-    //TODO
+      data.name = req.body.name || data.name;
+      data.description = req.body.description || data.description;
+      data.songs = req.body.songs || data.songs;
+      data.save(data);
+      res.json(data);
     };
   });
 };
