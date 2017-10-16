@@ -3,8 +3,11 @@ const Schema = mongoose.Schema;
 const db = require('../models');
 
 function getSignupPage(req, res) {
-  // res.send('signup page - work in progress');
   res.render('signup');
+}
+
+function getLoginPage(req, res) {
+  res.render('login');
 }
 
 //Creates a user and returns new user as a JSON object
@@ -111,6 +114,7 @@ function createPlaylist(req, res){
 
 module.exports = {
   getSignupPage: getSignupPage,
+  getLoginPage: getLoginPage,
   updateUser: updateUser,
   getAllUsers: getAllUsers,
   getOneUser: getOneUser,
