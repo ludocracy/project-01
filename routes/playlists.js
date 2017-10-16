@@ -14,6 +14,17 @@ function getOnePlaylist(req, res){
   });
 };
 
+function getAllPlaylists(req, res){
+  db.Playlist.find({}, function(err, data){
+    if(err){
+      console.log('Error retrieving this playlist.', err);
+      res.status(500).send('Internal server error.');
+    }else{
+      res.json(data);
+    };
+  });
+};
+
 // //Retrieves the contributors to a playlist TODO: INTEGRATE USERS TO PLAYLIST SCHEMA
 // function getAllUsers(req, res){
 //   db.Playlist.findById(req.params.id, function(err, data){
@@ -34,6 +45,7 @@ function updatePlaylist(req, res){
       res.status(500).send('Internal server error.');
     }else{
     //TODO
+    console.log("this should update playlist");
     };
   });
 };
@@ -62,5 +74,7 @@ function deletePlaylist(req, res){
 module.exports = {
   // getAllUsers: getAllUsers,
   getOnePlaylist: getOnePlaylist,
-  deletePlaylist: deletePlaylist
+  deletePlaylist: deletePlaylist,
+  updatePlaylist: updatePlaylist,
+  getAllPlaylists: getAllPlaylists
 };
