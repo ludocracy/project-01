@@ -57,9 +57,35 @@ function getAllPlaylists(req, res){
   })
 }
 
+//Creates a playlist with 'this' user as a contributor
+function createPlaylist(req, res){
+  db.User.findById(req.params.id, function(err, data){
+    if(err){
+      console.log('Error retrieving user', err);
+      res.status(500).send('Internal Server Error.');
+    }else{
+      const newPlaylist = db.Playlist({
+        name: req.body.name,
+        description: req.body.description,
+        songs: [],
+        user: req.params.id
+      })
+      newPlaylist.save(function(err, playlist){
+        if(err){
+          console.log('Error retrieving user', err);
+          res.status(500).send('Internal Server Error.');
+        }else{
+          res.status(201).send(`Created ${req.body.name} successfully`);
+        }
+      })
+    }
+  })
+}
+
 module.exports = {
   getAllUsers: getAllUsers,
   getOneUser: getOneUser,
   createUser: createUser,
-  getAllPlaylists: getAllPlaylists
+  getAllPlaylists: getAllPlaylists,
+  createPlaylist: createPlaylist
 };

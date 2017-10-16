@@ -53,5 +53,6 @@ function deleteSong(req, res){
 
 module.exports = {
   getAllSongs: getAllSongs,
-  createSong: createSong
+  createSong: createSong,
+  deleteSong: deleteSong
 };

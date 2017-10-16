@@ -31,7 +31,7 @@ app.delete('/playlists/:id', Routes.Playlists.deletePlaylist);
 //
 app.get('/playlists/:id/songs', Routes.Songs.getAllSongs);
 app.post('/playlists/:id/songs', Routes.Songs.createSong);
-// app.delete('/playlists/:pid/songs/:sid', Routes.Songs.deleteSong);
+app.delete('/playlists/:pid/songs/:sid', Routes.Songs.deleteSong);
 
 // START SERVER
 app.listen(PORT, () => {
