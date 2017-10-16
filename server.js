@@ -21,6 +21,7 @@ app.get('/', Routes.home);
 
 app.get('/signup', Routes.Users.getSignupPage);
 app.get('/login', Routes.Users.getLoginPage);
+app.post('/sessions', Routes.Users.newLoginSession);
 
 app.get('/users', Routes.Users.getAllUsers);
 app.get('/users/:id', Routes.Users.getOneUser);

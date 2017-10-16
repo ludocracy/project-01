@@ -10,22 +10,25 @@ function getLoginPage(req, res) {
   res.render('login');
 }
 
-//Creates a user and returns new user as a JSON object
-function createUser(req, res){
-  const newUser = db.User({
-    name: req.body.name,
-    email: req.body.email,
-    passwordHash: req.body.passwordHash,
-    playlists: []
+function newLoginSession(req, res) {
+  db.User.authenticate(req.body.email, req.body.passwordHash, function(err, user){
+    if (err) {
+      res.status(400).send(`Error processing login: ${err.message}`);
+    } else {
+      res.json(user);
+    }
   });
 
-  newUser.save(function(err, data){
-    if (err){
-      console.log('Error creating user.', err);
-      res.status(500).send('Internal server error.');
-    }else{
-      res.status(201).json(data);
-    };
+}
+
+//Creates a user and returns new user as a JSON object
+function createUser(req, res){
+  db.User.createSecure(req.body.name, req.body.email, req.body.passwordHash, function(err, savedUser) {
+    if (err) {
+      res.status(500).send('something went wrong.');
+    } else {
+      res.json(savedUser);
+    }
   });
 };
 
@@ -115,6 +118,7 @@ function createPlaylist(req, res){
 module.exports = {
   getSignupPage: getSignupPage,
   getLoginPage: getLoginPage,
+  newLoginSession: newLoginSession,
   updateUser: updateUser,
   getAllUsers: getAllUsers,
   getOneUser: getOneUser,
