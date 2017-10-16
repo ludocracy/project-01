@@ -21,6 +21,27 @@ function createUser(req, res){
   });
 };
 
+//Updates a user
+function updateUser(req, res){
+  db.User.findById(req.params.id, function(err, foundUser){
+    if(err){
+      console.log('Error finding user.', err);
+      res.status(500).send('Internal server error.');
+    }else{
+      foundUser.name = req.body.name || foundUser.name,
+      foundUser.email = req.body.email || foundUser.email
+    }
+    foundUser.save(function(err, data){
+      if(err){
+        console.log('Error saving user data.', err);
+        res.status(500).send('Internal server error.');
+      }else{
+        res.json(data);
+      }
+    })
+  })
+}
+
 //Retrieves all users and returns them in a JSON object
 function getAllUsers(req, res){
   db.User.find({}, function (err, data){
@@ -84,6 +105,7 @@ function createPlaylist(req, res){
 };
 
 module.exports = {
+  updateUser: updateUser,
   getAllUsers: getAllUsers,
   getOneUser: getOneUser,
   createUser: createUser,
