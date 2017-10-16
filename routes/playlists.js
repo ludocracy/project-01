@@ -2,6 +2,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const db = require('../models');
 
+//create playlist and returns playlist as JSON object
+function createPlaylist(req, res){
+  const newPlaylist = db.Playlist ({
+    name: req.body.name,
+    description: req.body.description,
+    songs: []
+  });
+
+  newPlaylist.save(function(err, data){
+    if (err){
+      console.log('Error creating playlist.', err);
+      res.status(500).send('Internal server error.');
+    }else{
+      res.status(201).json(data);
+    };
+  });
+};
+
 //Retrieves a playlist and returns them in a JSON object
 function getOnePlaylist(req, res){
   db.Playlist.findById(req.params.id, function(err, data){
@@ -61,6 +79,7 @@ function deletePlaylist(req, res){
 
 module.exports = {
   // getAllUsers: getAllUsers,
+  createPlaylist: createPlaylist,
   getOnePlaylist: getOnePlaylist,
   deletePlaylist: deletePlaylist,
   updatePlaylist: updatePlaylist
