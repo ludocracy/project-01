@@ -9,9 +9,8 @@ $(document).ready(function(){
   setCurrentUser();
 
   $('#createPlaylist').click(function (e) {
-    console.log(`'${$('#playlistName').value}'`);
-    let newName = $('#playlistName').text();
-    let newDescr = $('#playlistDescr').text();
+    let newName = $('#playlistName').val();
+    let newDescr = $('#playlistDescr').val();
     postPlaylist({
       name: newName,
       description: newDescr
@@ -24,6 +23,8 @@ $(document).ready(function(){
   // TODO submit song
   // TODO remove song
   // TODO edit playlist name
+
+  // TODO raul
 });
 
 //
@@ -50,7 +51,6 @@ function getOnePlaylist() {
 }
 
 function postPlaylist(data) {
-  console.log(`postPlaylist(${data.name})`)
   $.ajax({
     method: 'POST',
     url: `${URL}/users/${user._id}/playlists`,
