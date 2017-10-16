@@ -7,7 +7,6 @@ let playlist;
 $(document).ready(function(){
   // pull initial data
   setCurrentUser();
-  getAllPlaylists();
 
   // set up event listeners
   // TODO submit playlist
@@ -15,6 +14,7 @@ $(document).ready(function(){
   // TODO select individual song
   // TODO submit song
   // TODO remove song
+  // TODO edit playlist name
 });
 
 // ajax calls
@@ -22,7 +22,7 @@ $(document).ready(function(){
 function getAllPlaylists() {
   $.ajax({
     method: 'GET',
-    url: `${URL}/users/${user.id}/playlists`,
+    url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
     success: displayPlaylists,
     error: onError
@@ -32,19 +32,52 @@ function getAllPlaylists() {
 function getOnePlaylist() {
   $.ajax({
     method: 'GET',
-    url: `${URL}/users/${user.id}/playlists`,
+    url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
     success: displayPlaylists,
     error: onError
   });
 }
 
-function getSongs(playlistId) {
+function getSongs(options={}) {
   $.ajax({
     method: 'GET',
-    url: `${URL}/playlists/${playlistId}/songs`,
+    url: `${URL}/playlists/${options.playlistId}/songs`,
     dataType: 'json',
     success: displaySongs,
+    error: onError
+  });
+}
+
+function postPlaylist(options={}) {
+  $.ajax({
+    method: 'POST',
+    url: `${URL}/users/${user._id}/playlists`,
+    dataType: 'json',
+    data: options.data,
+    success: () => {},
+    error: onError
+  });
+}
+
+function postSong(options={}) {
+  $.ajax({
+    method: 'POST',
+    url: `${URL}/playlists/${options.playlistId}/songs`,
+    dataType: 'json',
+    data: options.data,
+    success: () => {},
+    error: onError
+  });
+}
+
+function updatePlaylist(options={}) {
+  $.ajax({
+    method: 'PUT',
+    url: `${URL}/playlists/${options.playlistId}`,
+    dataType: 'json',
+    data: options.data,
+    success: () => {},
     error: onError
   });
 }
@@ -55,8 +88,8 @@ function displaySongs() {
 
 }
 
-function displayPlaylists() {
-
+function displayPlaylists(res) {
+  $('.playlists-container').text(res);
 }
 
 // helpers
@@ -69,6 +102,7 @@ function setCurrentUser() {
     dataType: 'json',
     success: function (res) {
       user = res[0];
+      getAllPlaylists();
     },
     error: onError
   });
