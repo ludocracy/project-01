@@ -24,10 +24,9 @@ app.get('/users/:id', Routes.Users.getOneUser);
 app.post('/users', Routes.Users.createUser);
 app.get('/users/:id/playlists', Routes.Users.getAllPlaylists);
 app.post('/users/:id/playlists', Routes.Users.createPlaylist);
-// //
-app.post('/playlists', Routes.Playlists.createPlaylist);
+
 app.get('/playlists/:id', Routes.Playlists.getOnePlaylist);
-app.get('/playlists/:id/users', Routes.Playlists.getAllUsers);
+app.get('/playlists/:id/users', Routes.Playlists.getAllContributors);
 app.put('/playlists/:id', Routes.Playlists.updatePlaylist);
 app.delete('/playlists/:id', Routes.Playlists.deletePlaylist);
 
