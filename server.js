@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 // APP SETUP
 app.set('views', './views');
 app.set('view engine', 'ejs');
-app.use(express.static('public'))
+app.use(express.static('public'));
 app.use(bodyParser.json());
 
 // ROUTES
