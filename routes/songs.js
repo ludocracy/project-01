@@ -37,6 +37,20 @@ function createSong(req, res){
   });
 };
 
+function deleteSong(req, res){
+  db.Playlist.findById(req.paramas.pid, function(err, data){
+    data.songs.findByIdAndRemove(req.params.sid, function(err, song){
+      if(err){
+        console.log('Error finding this song in playlist.', err);
+        res.status(500).send('Internal server error.');
+      }else{
+        data.songs.save();
+        res.status(201).send('Song was successfully removed from playlist.');
+      }
+    })
+  })
+}
+
 module.exports = {
   getAllSongs: getAllSongs,
   createSong: createSong
