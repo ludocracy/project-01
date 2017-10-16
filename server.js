@@ -13,10 +13,13 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // ROUTES
 
 app.get('/', Routes.home);
+
+app.get('/signup', Routes.Users.getSignupPage);
 
 app.get('/users', Routes.Users.getAllUsers);
 app.get('/users/:id', Routes.Users.getOneUser);

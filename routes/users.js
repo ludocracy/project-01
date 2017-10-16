@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const db = require('../models');
 
+function getSignupPage(req, res) {
+  // res.send('signup page - work in progress');
+  res.render('signup');
+}
+
 //Creates a user and returns new user as a JSON object
 function createUser(req, res){
   const newUser = db.User({
@@ -105,6 +110,7 @@ function createPlaylist(req, res){
 };
 
 module.exports = {
+  getSignupPage: getSignupPage,
   updateUser: updateUser,
   getAllUsers: getAllUsers,
   getOneUser: getOneUser,
