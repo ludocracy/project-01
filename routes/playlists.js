@@ -7,7 +7,6 @@ function createPlaylist(req, res){
   const newPlaylist = db.Playlist ({
     name: req.body.name,
     description: req.body.description,
-    songs: []
   });
 
   newPlaylist.save(function(err, data){
