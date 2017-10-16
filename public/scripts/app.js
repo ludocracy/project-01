@@ -17,14 +17,15 @@ $(document).ready(function(){
   // TODO edit playlist name
 });
 
-// ajax calls
-
+//
+// AJAX CALLS
+//
 function getAllPlaylists() {
   $.ajax({
     method: 'GET',
     url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
-    success: displayPlaylists,
+    success: displayAllPlaylists,
     error: onError
   });
 }
@@ -34,7 +35,39 @@ function getOnePlaylist() {
     method: 'GET',
     url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
-    success: displayPlaylists,
+    success: displayOnePlaylist,
+    error: onError
+  });
+}
+
+function postPlaylist(options={}) {
+  $.ajax({
+    method: 'POST',
+    url: `${URL}/users/${user._id}/playlists`,
+    dataType: 'json',
+    data: options.data,
+    success: () => {}, // refresh view
+    error: onError
+  });
+}
+
+function updatePlaylist(options={}) {
+  $.ajax({
+    method: 'PUT',
+    url: `${URL}/playlists/${options.playlistId}`,
+    dataType: 'json',
+    data: options.data,
+    success: () => {}, // refresh view
+    error: onError
+  });
+}
+
+function deletePlaylist(options={}) {
+  $.ajax({
+    method: 'DELETE',
+    url: `${URL}/playlists/${options.playlistId}`,
+    dataType: 'json',
+    success: () => {}, // refresh view
     error: onError
   });
 }
@@ -49,50 +82,41 @@ function getSongs(options={}) {
   });
 }
 
-function postPlaylist(options={}) {
-  $.ajax({
-    method: 'POST',
-    url: `${URL}/users/${user._id}/playlists`,
-    dataType: 'json',
-    data: options.data,
-    success: () => {},
-    error: onError
-  });
-}
-
 function postSong(options={}) {
   $.ajax({
     method: 'POST',
     url: `${URL}/playlists/${options.playlistId}/songs`,
     dataType: 'json',
     data: options.data,
-    success: () => {},
+    success: () => {}, // refresh view?
     error: onError
   });
 }
 
-function updatePlaylist(options={}) {
+function deleteSong(options={}) {
   $.ajax({
-    method: 'PUT',
-    url: `${URL}/playlists/${options.playlistId}`,
+    method: 'DELETE',
+    url: `${URL}/songs/${options.songId}`,
     dataType: 'json',
-    data: options.data,
-    success: () => {},
+    success: () => {}, // refresh view?
     error: onError
   });
 }
 
-// callbacks
-
-function displaySongs() {
+//
+// CALLBACKS
+//
+function displaySongs(res) {
 
 }
 
-function displayPlaylists(res) {
+function displayAllPlaylists(res) {
   $('.playlists-container').text(res);
 }
 
-// helpers
+function displayOnePlaylist(res) {
+
+}
 
 // TODO re-implement when we add auth!!!
 function setCurrentUser() {
