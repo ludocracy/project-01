@@ -33,7 +33,7 @@ function createSong(req, res){
           res.status(201).json(song);
         }
       })
-      data.songs.push(newSong);
+      playlist.songs.push(newSong);
     };
   });
 };
