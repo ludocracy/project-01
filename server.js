@@ -2,7 +2,8 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
   Routes = require('./routes'),
-  app = express();
+  app = express(),
+  logger = require('morgan');
 
 // ENVIRONMENT
 require('dotenv').config();
