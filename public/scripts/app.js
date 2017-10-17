@@ -139,7 +139,7 @@ function displaySongs(res) {
   res.forEach(song => {
     let liStr = `<li class="songItem" id="${song._id}">${song.youTubeHash}</li>`;
     $('.song-container').append(liStr);
-    let li = ${'.song-container li'}.last();
+    let li = $('.song-container li').last();
     li.click(e => {
       if(selectedSongId){
         $(`${selectedSongId}`).removeClass('selectedSong');
