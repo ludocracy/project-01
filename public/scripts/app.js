@@ -97,7 +97,6 @@ function deletePlaylist() {
 }
 
 function getSongs() {
-  console.log(`getSongs: ${selectedPlaylistId}`);
   $.ajax({
     method: 'GET',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
