@@ -1,3 +1,7 @@
 .selectedPlaylist {
   background-color: pink;
 }
+
+.selectedSong {
+  background-color: blue;
+}
