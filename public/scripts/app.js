@@ -1,4 +1,4 @@
-const URL = 'http://localhost:3000';
+const URL = window.location.href.slice(0,-1);
 // TODO remove when we implement auth
 let user;
 // end
@@ -96,7 +96,7 @@ function deletePlaylist() {
   });
 }
 
-function getSongs(options={}) {
+function getSongs() {
   $.ajax({
     method: 'GET',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
@@ -107,7 +107,7 @@ function getSongs(options={}) {
 }
 
 function postSong() {
-  let newSong = ('#songName').val();
+  let newSong = $('#songName').val();
   $.ajax({
     method: 'POST',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
@@ -136,13 +136,17 @@ function deleteSong(){
 // CALLBACKS
 //
 function displaySongs(res) {
+  console.log(selectedPlaylistId);
+  console.log(res);
+  let songContainer = $('.song-container');
+  songContainer.empty();
   res.forEach(song => {
     let liStr = `<li class="songItem" id="${song._id}">${song.youTubeHash}</li>`;
-    $('.song-container').append(liStr);
-    let li = ${'.song-container li'}.last();
+    songContainer.append(liStr);
+    let li = $('.song-container li').last();
     li.click(e => {
       if(selectedSongId){
-        $(`${selectedSongId}`).removeClass('selectedSong');
+        $(`#${selectedSongId}`).removeClass('selectedSong');
       }
       selectedSongId = e.target.id;
       e.target.className += ' selectedSong';
@@ -152,7 +156,7 @@ function displaySongs(res) {
 
 function displayAllPlaylists(res) {
   res.forEach(playlist => {
-    let liStr = `<li class="playlistItem" id="${playlist._id}">${playlist.name} ${playlist.description}</li>`;
+    let liStr = `<li class="playlistItem" id="${playlist._id}">${playlist.name}: ${playlist.description}</li>`;
     $('.playlists-container').append(liStr);
     let li = $('.playlists-container li').last();
     li.click(e => { // event listener for when user selects a playlist
@@ -162,7 +166,7 @@ function displayAllPlaylists(res) {
       selectedPlaylistId = e.target.id;
       e.target.className += ' selectedPlaylist';
       // TODO call displaySongs for this playlist!
-      displaySongs(res);
+      getSongs();
     });
   });
 }
