@@ -113,7 +113,7 @@ function postSong() {
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
     dataType: 'json',
     data: {
-      youTubeHash: newSong;
+      youTubeHash: newSong
     },
     success: () => {}, // refresh view?
     error: onError
