@@ -46,20 +46,12 @@ function updatePlaylist(req, res){
 //Deletes playlist TODO: REMOVE REFERENCES TO PLAYLIST IN USERS' ARRAYS
 function deletePlaylist(req, res){
   var playlistName;
-  db.Playlist.findById(req.params.id, function(err, data){
-    if(err){
-      console.log('Error finding this playlist.', err);
-      res.status(500).send('Internal server error.');
-    }else{
-      playlistName = data.name || "playlist"
-    }
-  });
   db.Playlist.findOneAndRemove(req.params.id, function(err, data){
     if(err){
       console.log('Error deleting this playlist.', err);
       res.status(500).send('Internal server error.');
     }else{
-      res.status(201).send("The record for \'" + playlistName + "\' was deleted.");
+      res.json({});
     };
   });
 };

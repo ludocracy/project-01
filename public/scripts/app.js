@@ -2,20 +2,14 @@ const URL = 'http://localhost:3000';
 // TODO remove when we implement auth
 let user;
 // end
-let playlist;
+let selectedPlaylistId;
 
 $(document).ready(function(){
   // pull initial data
   setCurrentUser();
 
-  $('#createPlaylist').click(function (e) {
-    let newName = $('#playlistName').val();
-    let newDescr = $('#playlistDescr').val();
-    postPlaylist({
-      name: newName,
-      description: newDescr
-    });
-  });
+  $('#createPlaylistBtn').click(postPlaylist);
+  $('#deletePlaylistBtn').click(deletePlaylist);
   // set up event listeners
   // TODO submit playlist
   // TODO select individual playlist
@@ -50,35 +44,50 @@ function getOnePlaylist() {
   });
 }
 
-function postPlaylist(data) {
+function postPlaylist() {
+  let newName = $('#playlistName').val();
+  let newDescr = $('#playlistDescr').val();
   $.ajax({
     method: 'POST',
     url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
-    data: data,
+    data: {
+      name: newName,
+      description: newDescr
+    },
     success: () => {}, // refresh view
     error: onError
   });
 }
 
-function updatePlaylist(options={}) {
+// TODO probably gets called by clicking on playlist name when it appears in song list?
+function updatePlaylist() {
+  // TODO get updated name and description from song list display?
   $.ajax({
     method: 'PUT',
-    url: `${URL}/playlists/${options.playlistId}`,
+    url: `${URL}/playlists/${selectedPlaylistId}`,
     dataType: 'json',
-    data: options.data,
-    success: () => {}, // refresh view
+    data: {
+      name: '',
+      description: ''
+    },
+    success: displaySongs, // refresh view
     error: onError
   });
 }
 
-function deletePlaylist(options={}) {
+function deletePlaylist() {
   $.ajax({
     method: 'DELETE',
-    url: `${URL}/playlists/${options.playlistId}`,
+    url: `${URL}/playlists/${selectedPlaylistId}`,
     dataType: 'json',
-    success: () => {}, // refresh view
-    error: onError
+    success: res => {
+      $(`#${selectedPlaylistId}`).remove();
+      selectedPlaylistId = '';
+    },
+    error: xhr => {
+      console.log(xhr);
+    }
   });
 }
 
@@ -121,11 +130,19 @@ function displaySongs(res) {
 }
 
 function displayAllPlaylists(res) {
-  $('.playlists-container').text(res);
-}
-
-function displayOnePlaylist(res) {
-
+  res.forEach(playlist => {
+    let liStr = `<li class="playlistItem" id="${playlist._id}">${playlist.name} ${playlist.description}</li>`;
+    $('.playlists-container').append(liStr);
+    let li = $('.playlists-container li').last();
+    li.click(e => { // event listener for when user selects a playlist
+      if(selectedPlaylistId) {
+        $(`#${selectedPlaylistId}`).removeClass('selectedPlaylist');
+      }
+      selectedPlaylistId = e.target.id;
+      e.target.className += ' selectedPlaylist';
+      // TODO call displaySongs for this playlist!
+    });
+  });
 }
 
 // TODO re-implement when we add auth!!!

@@ -9,8 +9,13 @@ var testSong2 = new db.Song ({
   youTubeHash: "https://www.youtube.com/watch?v=auzfTPp4moA"
 });
 
-var testPlaylist = new db.Playlist ({
-  name: "testPlaylist",
+var testPlaylist1 = new db.Playlist ({
+  name: "testPlaylist1",
+  description: "this is a seed playlist!"
+});
+
+var testPlaylist2 = new db.Playlist ({
+  name: "testPlaylist2",
   description: "this is a seed playlist!"
 });
 
@@ -31,21 +36,24 @@ db.User.remove({}, () => {
             if (err) {
               console.log(err);
             } else {
-              testPlaylist.songs.push(testSong1);
-              testPlaylist.songs.push(testSong2);
-              testPlaylist.save(function(err, savedPlaylist){
+              testPlaylist1.songs.push(testSong1);
+              testPlaylist1.songs.push(testSong2);
+              testPlaylist1.save(function(err, savedPlaylist1){
                 if (err) {
                   console.log(err);
                 } else {
-                  testUser.playlists.push(testPlaylist);
-                  testUser.save(function(err, savedUser) {
-                    if(err) {
-                      console.log(err);
-                    } else {
-                      console.log('success! ', savedUser);
+                  testPlaylist2.save(function (err, savedPlaylist2) {
+                    testUser.playlists.push(testPlaylist1);
+                    testUser.playlists.push(testPlaylist2);
+                    testUser.save(function(err, savedUser) {
+                      if(err) {
+                        console.log(err);
+                      } else {
+                        console.log('success! ', savedUser);
 
-                      process.exit();
-                    }
+                        process.exit();
+                      }
+                    });
                   });
                 }
               });
