@@ -38,10 +38,12 @@ db.User.remove({}, () => {
             } else {
               testPlaylist1.songs.push(testSong1);
               testPlaylist1.songs.push(testSong2);
+              testPlaylist1.users.push(testUser);
               testPlaylist1.save(function(err, savedPlaylist1){
                 if (err) {
                   console.log(err);
                 } else {
+                  testPlaylist2.users.push(testUser);
                   testPlaylist2.save(function (err, savedPlaylist2) {
                     testUser.playlists.push(testPlaylist1);
                     testUser.playlists.push(testPlaylist2);
