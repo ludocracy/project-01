@@ -107,7 +107,7 @@ function getSongs(options={}) {
 }
 
 function postSong() {
-  let newSong = ('#songName').val();
+  let newSong = $('#songName').val();
   $.ajax({
     method: 'POST',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
@@ -139,7 +139,7 @@ function displaySongs(res) {
   res.forEach(song => {
     let liStr = `<li class="songItem" id="${song._id}">${song.youTubeHash}</li>`;
     $('.song-container').append(liStr);
-    let li = ${'.song-container li'}.last();
+    let li = $('.song-container li').last();
     li.click(e => {
       if(selectedSongId){
         $(`${selectedSongId}`).removeClass('selectedSong');
