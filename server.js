@@ -3,7 +3,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   Routes = require('./routes'),
   app = express(),
-  logger = require('morgan');
+  morgan = require('morgan');
 
 // ENVIRONMENT
 require('dotenv').config();
@@ -15,6 +15,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(morgan('dev'));
 
 // ROUTES
 

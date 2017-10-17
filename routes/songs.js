@@ -6,6 +6,10 @@ const db = require('../models');
 function getAllSongs(req, res){
   db.Playlist.findById(req.params.id)
   .populate('songs').exec(function(err, foundPlaylist){
+    if(err){
+      console.log('Error finding this playlist.', err);
+      res.status(500).send('Internal server error.');
+    }
     res.json(foundPlaylist.songs);
   })
 };

@@ -97,6 +97,7 @@ function deletePlaylist() {
 }
 
 function getSongs() {
+  console.log(`getSongs: ${selectedPlaylistId}`);
   $.ajax({
     method: 'GET',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
@@ -126,7 +127,6 @@ function deleteSong(){
     url: `${URL}/playlists/${selectedPlaylistId}/songs/${selectedSongId}`,
     dataType: 'json',
     success: res => {
-      console.log($(`#${selectedSongId}`))
       $(`#${selectedSongId}`).remove();
       selectedSongId = '';
     },
@@ -167,7 +167,6 @@ function displayAllPlaylists(res) {
       }
       selectedPlaylistId = e.target.id;
       e.target.className += ' selectedPlaylist';
-      // TODO call displaySongs for this playlist!
       getSongs();
     });
   });
