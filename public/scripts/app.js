@@ -4,6 +4,7 @@ let user;
 // end
 let selectedPlaylistId;
 let selectedSongId;
+let selectedSearchResultId;
 
 $(document).ready(function(){
   // pull initial data
@@ -11,15 +12,8 @@ $(document).ready(function(){
 
   $('#createPlaylistBtn').click(postPlaylist);
   $('#deletePlaylistBtn').click(deletePlaylist);
-  // set up event listeners
-  // TODO submit playlist
-  // TODO select individual playlist
-  // TODO select individual song
-  // TODO submit song
-  // TODO remove song
-  // TODO edit playlist name
 
-  // TODO raul
+  $('#searchSongsBtn').click(searchSong);
   $('#createSongBtn').click(postSong);
   $('#deleteSongBtn').click(deleteSong);
 });
@@ -27,6 +21,24 @@ $(document).ready(function(){
 //
 // AJAX CALLS
 //
+function searchSong() {
+  let searchStr = $('#songName').val();
+  let query = queryString({
+    q: searchStr,
+    part: 'snippet',
+    key: 'AIzaSyA57V2_-uR3DOFwmcmH8qZzr0ZXffXdaPY'
+  });
+  console.log(query);
+  let url = `https://www.googleapis.com/youtube/v3/search${query}`
+  $.ajax({
+    method: 'GET',
+    url: url,
+    dataType: 'json',
+    success: displaySearchResults,
+    error: onError
+  });
+}
+
 function getAllPlaylists() {
   $.ajax({
     method: 'GET',
@@ -108,15 +120,16 @@ function getSongs() {
 }
 
 function postSong() {
-  let newSong = $('#songName').val();
   $.ajax({
     method: 'POST',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
     dataType: 'json',
     data: {
-      youTubeHash: newSong
+      youTubeHash: `https://www.youtube.com/watch?v=${selectedSearchResultId}`
     },
-    success: () => {}, // refresh view?
+    success: () => {
+      selectedSearchResultId = '';
+    }, // refresh view?
     error: onError
   });
 }
@@ -137,6 +150,24 @@ function deleteSong(){
 //
 // CALLBACKS
 //
+function displaySearchResults(res) {
+  let searchContainer = $('.song-search-results');
+  searchContainer.empty();
+  res.items.forEach(result => {
+    let id = result.id.videoId;
+    // let url = `https://www.youtube.com/watch?v=${id}`;
+    let name = result.snippet.title;
+    // let contributor = currentUser();
+    let liStr = `<li class="song-search-result" id="${id}">${name}</li>`;
+    searchContainer.append(liStr);
+    let li = $('.song-search-results li').last();
+    li.click(e => {
+      selectedSearchResultId = e.target.id;
+
+    });
+  });
+}
+
 function displaySongs(res) {
   // console.log(selectedPlaylistId);
   // console.log(res);
@@ -188,4 +219,13 @@ function setCurrentUser() {
 
 function onError(xhr) {
   console.log(xhr);
+}
+
+function queryString(obj) {
+  let str = '?';
+  for(key in obj) {
+    let value = obj[key].replace(' ', '+');
+    str += `${key}=${value}&`;
+  }
+  return str.substring(0, str.length-1);
 }

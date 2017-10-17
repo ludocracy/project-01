@@ -13,22 +13,33 @@
       </nav>
     </header>
     <div class="main">
-      <div class="playlist-crud">
-        <input type="text" id="playlistName" placeholder="new playlist name" />
-        <input type="textarea" id="playlistDescr" placeholder="describe this playlist or leave blank" />
+      <div class="playlists-div">
+        <div class="playlist-crud">
+          <input type="text" id="playlistName" placeholder="new playlist name" />
+          <input type="textarea" id="playlistDescr" placeholder="describe this playlist or leave blank" />
 
-        <button id="createPlaylistBtn">Create playlist</button>
-        <button id="deletePlaylistBtn">Delete playlist</button>
+          <button id="createPlaylistBtn">Create playlist</button>
+          <button id="deletePlaylistBtn">Delete playlist</button>
+        </div>
+        <ul class="playlists-container">
+        </ul>
       </div>
-      <div class="song-crud">
-        <input type="text" id="songName" placeholder="new song name" />
-        <button id="createSongBtn">Create song</button>
-        <button id="deleteSongBtn">Delete song</button>
-      </div>
-      <ul class="playlists-container">
-      </ul>
-      <div class="song-container">
+      <div class="songs-div">
+        <h2 class="playlist-name"></h2>
+        <div class="song-crud">
+          <div class="song-search">
+            <input type="text" id="songName" placeholder="new song name" />
+            <button id="searchSongsBtn">Search Youtube</button>
+            <div class="song-search-results">
 
+            </div>
+          </div>
+          <button id="createSongBtn">Create song</button>
+          <button id="deleteSongBtn">Delete song</button>
+        </div>
+        <ul class="song-container">
+
+        </ul>
       </div>
     </div>
     <footer>
