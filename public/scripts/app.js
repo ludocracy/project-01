@@ -103,7 +103,7 @@ function getSongs() {
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
     dataType: 'json',
     success: displaySongs,
-    error: function(){console.log(selectedPlaylistId);}
+    error: onError
   });
 }
 
@@ -127,7 +127,6 @@ function deleteSong(){
     url: `${URL}/playlists/${selectedPlaylistId}/songs/${selectedSongId}`,
     dataType: 'json',
     success: res => {
-      console.log($(`#${selectedSongId}`))
       $(`#${selectedSongId}`).remove();
       selectedSongId = '';
     },
@@ -163,15 +162,12 @@ function displayAllPlaylists(res) {
     $('.playlists-container').append(liStr);
     let li = $('.playlists-container li').last();
     li.click(e => { // event listener for when user selects a playlist
-      console.log(`displayAllPlaylists(before): ${selectedPlaylistId}`);
       if(selectedPlaylistId) {
         $(`#${selectedPlaylistId}`).removeClass('selectedPlaylist');
       }
       selectedPlaylistId = e.target.id;
       e.target.className += ' selectedPlaylist';
-        console.log(`displayPlaylist(after): ${selectedPlaylistId}`);
-      // TODO call displaySongs for this playlist!
-        getSongs();
+      getSongs();
     });
   });
 }

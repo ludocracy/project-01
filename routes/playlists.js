@@ -45,18 +45,15 @@ function updatePlaylist(req, res){
 
 //Deletes playlist TODO: REMOVE REFERENCES TO PLAYLIST IN USERS' ARRAYS
 function deletePlaylist(req, res){
-  console.log(`deletePlaylist1: ${req.params.id}`);
   db.Playlist.findByIdAndRemove(req.params.id, function(err, playlistDeleted){
     if(err){
       console.log('Error deleting this playlist.', err);
       res.status(500).send('Internal server error.');
     }else{
-      console.log(`deletePlaylist2: ${playlistDeleted._id}`);
       let ownerId = playlistDeleted.users[0];
-      console.log(ownerId);
       db.User.findById(ownerId, (err, foundOwner) => {
-        console.log(foundOwner);
         foundOwner.playlists.splice(foundOwner.playlists.indexOf(playlistDeleted._id));
+        foundOwner.save();
       })
       res.json({});
     };
