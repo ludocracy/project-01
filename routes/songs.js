@@ -40,18 +40,19 @@ function createSong(req, res){
 
 //deletes a song by its ID in the playlist referenced in the parameter
 function deleteSong(req, res){
-  db.Playlist.findById(req.paramas.pid, function(err, data){
-    data.songs.findByIdAndRemove(req.params.sid, function(err, song){
+  db.Playlist.findById(req.params.pid, function(err, foundPlaylist){
+    db.Song.findByIdAndRemove(req.params.sid, function(err, song){
       if(err){
-        console.log('Error finding this song in playlist.', err);
+        console.log('Error finding song in playlist.', err);
         res.status(500).send('Internal server error.');
       }else{
-        data.songs.save();
-        res.status(201).send('Song was successfully removed from playlist.');
-      };
+        let deadIdIndex = foundPlaylist.songs.indexOf(req.params.sid);
+        foundPlaylist.songs.splice(deadIdIndex, 1);
+        foundPlaylist.save();
+      }
     });
   });
-};
+}
 
 module.exports = {
   getAllSongs: getAllSongs,

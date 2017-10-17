@@ -123,10 +123,12 @@ function postSong() {
 function deleteSong(){
   $.ajax({
     method: 'DELETE',
-    url: `${URL}/playlist/${selectedPlaylistId}/songs/${selectedSong}`,
+    url: `${URL}/playlists/${selectedPlaylistId}/songs/${selectedSongId}`,
     dataType: 'json',
     success: res => {
-      $(`#${selectedSong}`).remove();
+      console.log($(`#${selectedSongId}`))
+      $(`#${selectedSongId}`).remove();
+      selectedSongId = '';
     },
     error: onError
   });
@@ -136,8 +138,8 @@ function deleteSong(){
 // CALLBACKS
 //
 function displaySongs(res) {
-  console.log(selectedPlaylistId);
-  console.log(res);
+  // console.log(selectedPlaylistId);
+  // console.log(res);
   let songContainer = $('.song-container');
   songContainer.empty();
   res.forEach(song => {
