@@ -3,6 +3,7 @@ const URL = 'http://localhost:3000';
 let user;
 // end
 let selectedPlaylistId;
+let selectedSongId;
 
 $(document).ready(function(){
   // pull initial data
@@ -107,7 +108,7 @@ function postSong() {
   let newSong = ('#songName').val();
   $.ajax({
     method: 'POST',
-    url: `${URL}/playlists/${user._id}/songs`,
+    url: `${URL}/playlists/${selectedPlaylistId}/songs`,
     dataType: 'json',
     data: {
       youTubeHash: newSong;
@@ -117,13 +118,13 @@ function postSong() {
   });
 }
 
-function deleteSong(options={}){
+function deleteSong(){
   $.ajax({
     method: 'DELETE',
-    url: `${URL}/playlist/${selectedPlaylistId}/songs/${options.songId}`,
+    url: `${URL}/playlist/${selectedPlaylistId}/songs/${selectedSong}`,
     dataType: 'json',
     success: res => {
-      $(`#${options.songId}`).remove();
+      $(`#${selectedSong}`).remove();
     },
     error: onError
   });
@@ -138,7 +139,11 @@ function displaySongs(res) {
     $('.song-container').append(liStr);
     let li = ${'.song-container li'}.last();
     li.click(e => {
-      //Presumably plays song
+      if(selectedSongId){
+        $(`${selectedSongId}`).removeClass('selectedSong');
+      }
+      selectedSongId = e.target.id;
+      e.target.className += ' selectedSong';
     })
   });
 };
