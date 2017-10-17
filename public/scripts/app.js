@@ -1,4 +1,4 @@
-const URL = 'http://localhost:3000';
+const URL = window.location.href.slice(0,-1);
 // TODO remove when we implement auth
 let user;
 // end
@@ -107,7 +107,7 @@ function getSongs(options={}) {
 }
 
 function postSong() {
-  let newSong = ('#songName').val();
+  let newSong = $('#songName').val();
   $.ajax({
     method: 'POST',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
