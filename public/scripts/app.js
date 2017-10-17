@@ -1,4 +1,4 @@
-const URL = 'http://localhost:3000';
+const URL = window.location.href.slice(0,-1);
 // TODO remove when we implement auth
 let user;
 // end
