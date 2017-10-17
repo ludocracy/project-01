@@ -55,7 +55,9 @@ function postPlaylist() {
       name: newName,
       description: newDescr
     },
-    success: () => {}, // refresh view
+    success: res => {
+      // TODO show new item in list - need a method for this?
+    }, // refresh view
     error: onError
   });
 }
