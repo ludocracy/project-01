@@ -19,6 +19,8 @@ $(document).ready(function(){
   // TODO edit playlist name
 
   // TODO raul
+  $('#createSongBtn').click(postSong);
+  $('#deleteSongBtn').click(deleteSong);
 });
 
 //
@@ -94,30 +96,35 @@ function deletePlaylist() {
 function getSongs(options={}) {
   $.ajax({
     method: 'GET',
-    url: `${URL}/playlists/${options.playlistId}/songs`,
+    url: `${URL}/playlists/${selectedPlaylistId}/songs`,
     dataType: 'json',
     success: displaySongs,
     error: onError
   });
 }
 
-function postSong(options={}) {
+function postSong() {
+  let newSong = ('#songName').val();
   $.ajax({
     method: 'POST',
-    url: `${URL}/playlists/${options.playlistId}/songs`,
+    url: `${URL}/playlists/${user._id}/songs`,
     dataType: 'json',
-    data: options.data,
+    data: {
+      youTubeHash: newSong;
+    },
     success: () => {}, // refresh view?
     error: onError
   });
 }
 
-function deleteSong(options={}) {
+function deleteSong(options={}){
   $.ajax({
     method: 'DELETE',
-    url: `${URL}/songs/${options.songId}`,
+    url: `${URL}/playlist/${selectedPlaylistId}/songs/${options.songId}`,
     dataType: 'json',
-    success: () => {}, // refresh view?
+    success: res => {
+      $(`#${options.songId}`).remove();
+    },
     error: onError
   });
 }
@@ -126,8 +133,15 @@ function deleteSong(options={}) {
 // CALLBACKS
 //
 function displaySongs(res) {
-
-}
+  res.forEach(song => {
+    let liStr = `<li class="songItem" id="${song._id}">${song.youTubeHash}</li>`;
+    $('.song-container').append(liStr);
+    let li = ${'.song-container li'}.last();
+    li.click(e => {
+      //Presumably plays song
+    })
+  });
+};
 
 function displayAllPlaylists(res) {
   res.forEach(playlist => {
@@ -141,6 +155,7 @@ function displayAllPlaylists(res) {
       selectedPlaylistId = e.target.id;
       e.target.className += ' selectedPlaylist';
       // TODO call displaySongs for this playlist!
+      displaySongs(res);
     });
   });
 }
