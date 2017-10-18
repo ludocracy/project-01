@@ -25,11 +25,23 @@ function createSong(req, res){
         youTubeHash: req.body.youTubeHash,
         // user: req.body.user
       });
-      newSong.save();
-      //adds songs to playlist then saves the playlist
-      playlist.songs.push(newSong);
-      playlist.save();
-      res.json(newSong);
+      newSong.save(function(err, data){
+        if(err){
+          console.log('Error saving song to playlist', err);
+          res.status(500).send('Internal server error.');
+        }else{
+          //adds songs to playlist then saves the playlist
+          playlist.songs.push(newSong);
+          playlist.save(function(err, savedPlaylist){
+            if(err){
+              console.log('Error saving playlist to database.');
+              res.status(500).send('Internal server error.');
+            }else{
+              res.json(newSong);
+            }
+          });
+        }
+      });
     };
   });
 };

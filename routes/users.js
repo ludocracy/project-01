@@ -103,15 +103,14 @@ function createPlaylist(req, res){
       //adds newPlaylist to user's playlists
       user.playlists.push(newPlaylist);
       user.save();
-      newPlaylist.save()//(function(err, playlist){
-      //   if(err){
-      //     console.log('Error retrieving user', err);
-      //     res.status(500).send('Internal Server Error.');
-      //   }else{
-      //     res.status(201).send(`Created ${req.body.name} successfully`);
-      //   };
-      // });
-      res.json(newPlaylist);
+      newPlaylist.save(function(err, playlist){
+        if(err){
+          console.log('Error retrieving user', err);
+          res.status(500).send('Internal Server Error.');
+        }else{
+          res.json(playlist);
+        };
+      });
     };
   });
 };
