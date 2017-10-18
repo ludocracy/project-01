@@ -1,3 +1,4 @@
+/*TESTING*/
 .selectedPlaylist {
   background-color: pink;
 }
@@ -8,4 +9,108 @@
 
 .selectedSearchResult {
   background-color: yellow;
+}
+
+/*MAIN*/
+
+/** {
+  border: 1px solid grey !important;
+}*/
+
+html {
+  height:99%;
+}
+
+body {
+  /*height: 99%;*/
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+}
+
+body {
+  margin: 30px;
+  width: auto;
+  font-family: 'Roboto', sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.playlists-div, .playlist-crud {
+  margin-bottom: 10px;
+}
+
+#playlistDescr {
+  width: 67%;
+}
+
+.playlists-container {
+  font-size: 24px;
+  flex-direction: column;
+  display: flex;
+  min-height: 80px;
+  max-height: 80px;
+  overflow-y: scroll;
+}
+
+.overflow-container-playlist {
+  min-width: 50%;
+  min-height: 80px;
+  max-height: 80px;
+  overflow-y: hidden;
+}
+
+.songs-div {
+  display: flex;
+  flex-direction: row;
+}
+
+.song-crud {
+  display: flex;
+  flex-direction: column;
+  order: 2;
+  max-height: 650px;
+  width: 50%;
+}
+
+.song-container {
+  max-height: 650px;
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  order: 1;
+  background-color: rgba(255, 0, 0, 0.5); /*for TESTING purposes*/
+  overflow-y: scroll;
+}
+
+.song-search {
+  display: flex;
+  flex-direction: column;
+}
+
+#song-embed {
+  margin: 0 auto;
+}
+
+#createSongBtn, #deleteSongBtn {
+
+}
+
+.overflow-container {
+  min-width: 50%;
+  min-height: 650px;
+  max-height: 650px;
+  overflow-y: hidden;
 }

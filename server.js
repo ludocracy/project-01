@@ -21,6 +21,9 @@ app.use(morgan('dev'));
 
 app.get('/', Routes.home);
 
+//test
+app.get('/test', Routes.test);
+
 app.get('/signup', Routes.Users.getSignupPage);
 app.get('/login', Routes.Users.getLoginPage);
 app.post('/sessions', Routes.Users.newLoginSession);

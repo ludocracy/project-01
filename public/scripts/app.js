@@ -230,6 +230,7 @@ function addNewPlaylist(res){
   $('.playlists-container').append(liStr);
   let li = $('.playlists-container li').last();
   li.click(e => { // event listener for when user selects a playlist
+    // TO DO: event listener that 'visibility: visible' for DIV containing playlist info
     if(selectedPlaylistId) {
       $(`#${selectedPlaylistId}`).removeClass('selectedPlaylist');
     }
