@@ -2,9 +2,9 @@ const URL = window.location.href.slice(0,-1);
 // TODO remove when we implement auth
 let user;
 // end
-let selectedPlaylistId;
-let selectedSongId;
-let selectedSearchResultId;
+let selectedPlaylistId = '';
+let selectedSongId = '';
+let selectedSearchResultId = '';
 
 $(document).ready(function(){
   // pull initial data
@@ -26,9 +26,10 @@ function searchSong() {
   let query = queryString({
     q: searchStr,
     part: 'snippet',
+    type: 'video',
+    maxResults: '10',
     key: 'AIzaSyA57V2_-uR3DOFwmcmH8qZzr0ZXffXdaPY'
   });
-  console.log(query);
   let url = `https://www.googleapis.com/youtube/v3/search${query}`
   $.ajax({
     method: 'GET',
@@ -109,7 +110,6 @@ function deletePlaylist() {
 }
 
 function getSongs() {
-  console.log(`getSongs: ${selectedPlaylistId}`);
   $.ajax({
     method: 'GET',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
@@ -120,6 +120,7 @@ function getSongs() {
 }
 
 function postSong() {
+  if(selectedPlaylistId === '') { return; }
   $.ajax({
     method: 'POST',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
@@ -127,9 +128,7 @@ function postSong() {
     data: {
       youTubeHash: `https://www.youtube.com/watch?v=${selectedSearchResultId}`
     },
-    success: () => {
-      selectedSearchResultId = '';
-    }, // refresh view?
+    success: getSongs,
     error: onError
   });
 }
@@ -155,15 +154,17 @@ function displaySearchResults(res) {
   searchContainer.empty();
   res.items.forEach(result => {
     let id = result.id.videoId;
-    // let url = `https://www.youtube.com/watch?v=${id}`;
     let name = result.snippet.title;
-    // let contributor = currentUser();
+    // TODO let contributor = currentUser();
     let liStr = `<li class="song-search-result" id="${id}">${name}</li>`;
     searchContainer.append(liStr);
     let li = $('.song-search-results li').last();
     li.click(e => {
+      if(selectedSearchResultId){
+        $(`#${selectedSearchResultId}`).removeClass('selectedSearchResult');
+      }
       selectedSearchResultId = e.target.id;
-
+      e.target.className += ' selectedSearchResult';
     });
   });
 }

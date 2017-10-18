@@ -5,3 +5,7 @@
 .selectedSong {
   background-color: blue;
 }
+
+.selectedSearchResult {
+  background-color: yellow;
+}
