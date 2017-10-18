@@ -5,23 +5,48 @@ let user;
 let selectedPlaylistId = '';
 let selectedSongId = '';
 let selectedSearchResultId = '';
+let player = null;
 
 $(document).ready(function(){
   // pull initial data
   setCurrentUser();
 
+  // embed youtube video player
+  // 2. This code loads the IFrame Player API code asynchronously.
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
   $('#createPlaylistBtn').click(postPlaylist);
   $('#deletePlaylistBtn').click(deletePlaylist);
 
-  $('#searchSongsBtn').click(searchSong);
+  $('#searchForm').submit(searchSong);
   $('#createSongBtn').click(postSong);
   $('#deleteSongBtn').click(deleteSong);
 });
 
 //
+// YOUTUBE EMBED CODE
+//
+
+function onPlayerReady(event) {
+  event.target.playVideo();
+}
+
+function onPlayerStateChange(event) {
+  if (event.data != YT.PlayerState.PLAYING) {
+    // TODO play next song
+    // TODO
+  }
+}
+
+//
 // AJAX CALLS
 //
-function searchSong() {
+function searchSong(e) {
+  e.preventDefault();
   let searchStr = $('#songName').val();
   let query = queryString({
     q: searchStr,
@@ -165,6 +190,21 @@ function displaySearchResults(res) {
       }
       selectedSearchResultId = e.target.id;
       e.target.className += ' selectedSearchResult';
+      // embed player for current song
+      // TODO move to displaySongs when we retool DB to handle just video ids and not urls
+      if(player) {
+        player.loadVideoById(selectedSearchResultId);
+      } else {
+        player = new YT.Player('song-embed', {
+          height: '390',
+          width: '640',
+          videoId: selectedSearchResultId,
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
     });
   });
 }
@@ -184,7 +224,7 @@ function displaySongs(res) {
       }
       selectedSongId = e.target.id;
       e.target.className += ' selectedSong';
-    })
+    });
   });
 };
 
