@@ -2,31 +2,69 @@ const URL = window.location.href.slice(0,-1);
 // TODO remove when we implement auth
 let user;
 // end
-let selectedPlaylistId;
-let selectedSongId;
+let selectedPlaylistId = '';
+let selectedSongId = '';
+let selectedSearchResultId = '';
+let player = null;
 
 $(document).ready(function(){
   // pull initial data
   setCurrentUser();
 
+  // embed youtube video player
+  // 2. This code loads the IFrame Player API code asynchronously.
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
   $('#createPlaylistBtn').click(postPlaylist);
   $('#deletePlaylistBtn').click(deletePlaylist);
-  // set up event listeners
-  // TODO submit playlist
-  // TODO select individual playlist
-  // TODO select individual song
-  // TODO submit song
-  // TODO remove song
-  // TODO edit playlist name
 
-  // TODO raul
+  $('#searchForm').submit(searchSong);
   $('#createSongBtn').click(postSong);
   $('#deleteSongBtn').click(deleteSong);
 });
 
 //
+// YOUTUBE EMBED CODE
+//
+
+function onPlayerReady(event) {
+  event.target.playVideo();
+}
+
+function onPlayerStateChange(event) {
+  if (event.data != YT.PlayerState.PLAYING) {
+    // TODO play next song
+    // TODO
+  }
+}
+
+//
 // AJAX CALLS
 //
+function searchSong(e) {
+  e.preventDefault();
+  let searchStr = $('#songName').val();
+  let query = queryString({
+    q: searchStr,
+    part: 'snippet',
+    type: 'video',
+    maxResults: '10',
+    key: 'AIzaSyA57V2_-uR3DOFwmcmH8qZzr0ZXffXdaPY'
+  });
+  let url = `https://www.googleapis.com/youtube/v3/search${query}`
+  $.ajax({
+    method: 'GET',
+    url: url,
+    dataType: 'json',
+    success: displaySearchResults,
+    error: onError
+  });
+}
+
 function getAllPlaylists() {
   $.ajax({
     method: 'GET',
@@ -58,9 +96,7 @@ function postPlaylist() {
       name: newName,
       description: newDescr
     },
-    success: res => {
-      // TODO show new item in list - need a method for this?
-    }, // refresh view
+    success: addNewPlaylist,
     error: onError
   });
 }
@@ -97,7 +133,6 @@ function deletePlaylist() {
 }
 
 function getSongs() {
-  console.log(`getSongs: ${selectedPlaylistId}`);
   $.ajax({
     method: 'GET',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
@@ -108,15 +143,15 @@ function getSongs() {
 }
 
 function postSong() {
-  let newSong = $('#songName').val();
+  if(selectedPlaylistId === '') { return; }
   $.ajax({
     method: 'POST',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
     dataType: 'json',
     data: {
-      youTubeHash: newSong
+      youTubeHash: `https://www.youtube.com/watch?v=${selectedSearchResultId}`
     },
-    success: () => {}, // refresh view?
+    success: addNewSong,
     error: onError
   });
 }
@@ -130,46 +165,91 @@ function deleteSong(){
       $(`#${selectedSongId}`).remove();
       selectedSongId = '';
     },
-    error: onError
+    error: xhr => {
+      console.log(xhr);
+    }
   });
 }
 
 //
 // CALLBACKS
 //
+function displaySearchResults(res) {
+  let searchContainer = $('.song-search-results');
+  searchContainer.empty();
+  res.items.forEach(result => {
+    let id = result.id.videoId;
+    let name = result.snippet.title;
+    // TODO let contributor = currentUser();
+    let liStr = `<li class="song-search-result" id="${id}">${name}</li>`;
+    searchContainer.append(liStr);
+    let li = $('.song-search-results li').last();
+    li.click(e => {
+      if(selectedSearchResultId){
+        $(`#${selectedSearchResultId}`).removeClass('selectedSearchResult');
+      }
+      selectedSearchResultId = e.target.id;
+      e.target.className += ' selectedSearchResult';
+      // embed player for current song
+      // TODO move to displaySongs when we retool DB to handle just video ids and not urls
+      if(player) {
+        player.loadVideoById(selectedSearchResultId);
+      } else {
+        player = new YT.Player('song-embed', {
+          height: '390',
+          width: '640',
+          videoId: selectedSearchResultId,
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+    });
+  });
+}
+
 function displaySongs(res) {
-  // console.log(selectedPlaylistId);
-  // console.log(res);
   let songContainer = $('.song-container');
   songContainer.empty();
   res.forEach(song => {
-    let liStr = `<li class="songItem" id="${song._id}">${song.youTubeHash}</li>`;
-    songContainer.append(liStr);
-    let li = $('.song-container li').last();
-    li.click(e => {
-      if(selectedSongId){
-        $(`#${selectedSongId}`).removeClass('selectedSong');
-      }
-      selectedSongId = e.target.id;
-      e.target.className += ' selectedSong';
-    })
+    addNewSong(song);
   });
 };
 
 function displayAllPlaylists(res) {
+  let playlistContainer = $('.playlists-container');
+  playlistContainer.empty();
   res.forEach(playlist => {
-    let liStr = `<li class="playlistItem" id="${playlist._id}">${playlist.name}: ${playlist.description}</li>`;
-    $('.playlists-container').append(liStr);
-    let li = $('.playlists-container li').last();
-    li.click(e => { // event listener for when user selects a playlist
-      if(selectedPlaylistId) {
-        $(`#${selectedPlaylistId}`).removeClass('selectedPlaylist');
-      }
-      selectedPlaylistId = e.target.id;
-      e.target.className += ' selectedPlaylist';
-      getSongs();
-    });
+    addNewPlaylist(playlist);
   });
+}
+
+function addNewPlaylist(res){
+  let liStr = `<li class="playlistItem" id="${res._id}">${res.name}: ${res.description}</li>`;
+  $('.playlists-container').append(liStr);
+  let li = $('.playlists-container li').last();
+  li.click(e => { // event listener for when user selects a playlist
+    if(selectedPlaylistId) {
+      $(`#${selectedPlaylistId}`).removeClass('selectedPlaylist');
+    }
+    selectedPlaylistId = e.target.id;
+    e.target.className += ' selectedPlaylist';
+    getSongs();
+  });
+}
+
+function addNewSong(res){
+  let liStr = `<li class="songItem" id="${res._id}">${res.youTubeHash}</li>`;
+  $('.song-container').append(liStr);
+  let li = $('.song-container li').last();
+  li.click(e => {
+    if(selectedSongId){
+      $(`#${selectedSongId}`).removeClass('selectedSong');
+    }
+    selectedSongId = e.target.id;
+    e.target.className += ' selectedSong';
+  })
 }
 
 // TODO re-implement when we add auth!!!
@@ -188,4 +268,13 @@ function setCurrentUser() {
 
 function onError(xhr) {
   console.log(xhr);
+}
+
+function queryString(obj) {
+  let str = '?';
+  for(key in obj) {
+    let value = obj[key].replace(' ', '+');
+    str += `${key}=${value}&`;
+  }
+  return str.substring(0, str.length-1);
 }
