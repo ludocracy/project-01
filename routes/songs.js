@@ -24,20 +24,12 @@ function createSong(req, res){
       const newSong = db.Song({
         youTubeHash: req.body.youTubeHash,
         // user: req.body.user
-      })
-
-      //adds songs to playlist
-      playlist.songs.push(newSong)
-
-      newSong.save(function(err, song){
-        if(err){
-          console.log('Error saving song model to playlist.', err);
-          res.status(500).send('Internal server error.');
-        }else{
-          res.status(201).json(song);
-        }
-      })
+      });
+      newSong.save();
+      //adds songs to playlist then saves the playlist
       playlist.songs.push(newSong);
+      playlist.save();
+      res.json(newSong);
     };
   });
 };
@@ -53,6 +45,7 @@ function deleteSong(req, res){
         let deadIdIndex = foundPlaylist.songs.indexOf(req.params.sid);
         foundPlaylist.songs.splice(deadIdIndex, 1);
         foundPlaylist.save();
+        res.json({});
       }
     });
   });

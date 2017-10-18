@@ -58,9 +58,7 @@ function postPlaylist() {
       name: newName,
       description: newDescr
     },
-    success: res => {
-      // TODO show new item in list - need a method for this?
-    }, // refresh view
+    success: addNewPlaylist,
     error: onError
   });
 }
@@ -97,7 +95,6 @@ function deletePlaylist() {
 }
 
 function getSongs() {
-  console.log(`getSongs: ${selectedPlaylistId}`);
   $.ajax({
     method: 'GET',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
@@ -116,7 +113,7 @@ function postSong() {
     data: {
       youTubeHash: newSong
     },
-    success: () => {}, // refresh view?
+    success: addNewSong,
     error: onError
   });
 }
@@ -130,7 +127,9 @@ function deleteSong(){
       $(`#${selectedSongId}`).remove();
       selectedSongId = '';
     },
-    error: onError
+    error: xhr => {
+      console.log(xhr);
+    }
   });
 }
 
@@ -138,8 +137,6 @@ function deleteSong(){
 // CALLBACKS
 //
 function displaySongs(res) {
-  // console.log(selectedPlaylistId);
-  // console.log(res);
   let songContainer = $('.song-container');
   songContainer.empty();
   res.forEach(song => {
@@ -157,6 +154,8 @@ function displaySongs(res) {
 };
 
 function displayAllPlaylists(res) {
+  let playlistContainer = $('.playlists-container');
+  playlistContainer.empty();
   res.forEach(playlist => {
     let liStr = `<li class="playlistItem" id="${playlist._id}">${playlist.name}: ${playlist.description}</li>`;
     $('.playlists-container').append(liStr);
@@ -170,6 +169,33 @@ function displayAllPlaylists(res) {
       getSongs();
     });
   });
+}
+
+function addNewPlaylist(res){
+  let liStr = `<li class="playlistItem" id="${res._id}">${res.name}: ${res.description}</li>`;
+  $('.playlists-container').append(liStr);
+  let li = $('.playlists-container li').last();
+  li.click(e => { // event listener for when user selects a playlist
+    if(selectedPlaylistId) {
+      $(`#${selectedPlaylistId}`).removeClass('selectedPlaylist');
+    }
+    selectedPlaylistId = e.target.id;
+    e.target.className += ' selectedPlaylist';
+    getSongs();
+  });
+}
+
+function addNewSong(res){
+  let liStr = `<li class="songItem" id="${res._id}">${res.youTubeHash}</li>`;
+  $('.song-container').append(liStr);
+  let li = $('.song-container li').last();
+  li.click(e => {
+    if(selectedSongId){
+      $(`#${selectedSongId}`).removeClass('selectedSong');
+    }
+    selectedSongId = e.target.id;
+    e.target.className += ' selectedSong';
+  })
 }
 
 // TODO re-implement when we add auth!!!
