@@ -22,6 +22,7 @@ function createSong(req, res){
       res.status(500).send('Internal server error.');
     }else{
       const newSong = db.Song({
+        title: req.body.title,
         youTubeHash: req.body.youTubeHash,
         // user: req.body.user
       });

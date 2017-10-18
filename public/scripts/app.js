@@ -4,7 +4,7 @@ let user;
 // end
 let selectedPlaylistId = '';
 let selectedSongId = '';
-let selectedSearchResultId = '';
+let selectedSearchResult = {};
 let player = null;
 
 $(document).ready(function(){
@@ -38,7 +38,7 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
   if (event.data != YT.PlayerState.PLAYING) {
     // TODO play next song
-    // TODO
+    // TODO check for updates
   }
 }
 
@@ -61,7 +61,7 @@ function searchSong(e) {
     url: url,
     dataType: 'json',
     success: displaySearchResults,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -71,7 +71,7 @@ function getAllPlaylists() {
     url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
     success: displayAllPlaylists,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -81,7 +81,7 @@ function getOnePlaylist() {
     url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
     success: displayOnePlaylist,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -97,7 +97,7 @@ function postPlaylist() {
       description: newDescr
     },
     success: addNewPlaylist,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -113,7 +113,7 @@ function updatePlaylist() {
       description: ''
     },
     success: displaySongs, // refresh view
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -138,7 +138,7 @@ function getSongs() {
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
     dataType: 'json',
     success: displaySongs,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -149,10 +149,11 @@ function postSong() {
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
     dataType: 'json',
     data: {
-      youTubeHash: `https://www.youtube.com/watch?v=${selectedSearchResultId}`
+      title: selectedSearchResult.title,
+      youTubeHash: selectedSearchResult.id
     },
     success: addNewSong,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -174,10 +175,12 @@ function deleteSong(){
 //
 // CALLBACKS
 //
+let searchResults = [];
 function displaySearchResults(res) {
   let searchContainer = $('.song-search-results');
   searchContainer.empty();
-  res.items.forEach(result => {
+  searchResults = res.items;
+  searchResults.forEach(result => {
     let id = result.id.videoId;
     let name = result.snippet.title;
     // TODO let contributor = currentUser();
@@ -185,28 +188,42 @@ function displaySearchResults(res) {
     searchContainer.append(liStr);
     let li = $('.song-search-results li').last();
     li.click(e => {
-      if(selectedSearchResultId){
-        $(`#${selectedSearchResultId}`).removeClass('selectedSearchResult');
+      if(selectedSearchResult.id){
+        $(`#${selectedSearchResult.id}`).removeClass('selectedSearchResult');
       }
-      selectedSearchResultId = e.target.id;
+      selectedSearchResult.id = e.target.id;
+      selectedSearchResult.title = e.target.innerText;
       e.target.className += ' selectedSearchResult';
-      // embed player for current song
-      // TODO move to displaySongs when we retool DB to handle just video ids and not urls
-      if(player) {
-        player.loadVideoById(selectedSearchResultId);
-      } else {
-        player = new YT.Player('song-embed', {
-          height: '390',
-          width: '640',
-          videoId: selectedSearchResultId,
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
-        });
-      }
+      showSearchThumbnail();
     });
   });
+}
+
+function showSearchThumbnail() {
+  let thumbnailDiv = $('#song-search-thumbnail');
+  thumbnailDiv.empty();
+  let searchResultObj = searchResults.find(function(res) {
+    return res.id.videoId === selectedSearchResult.id;
+  });
+  let thumbnailUrl = searchResultObj.snippet.thumbnails.high.url;
+  let imgStr = `<img src="${thumbnailUrl}"></img>`;
+  thumbnailDiv.append(imgStr);
+}
+
+function setUpPlayer(videoId) {
+  if(player) {
+    player.loadVideoById(videoId);
+  } else {
+    player = new YT.Player('song-embed', {
+      height: '390',
+      width: '640',
+      videoId: videoId,
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
 }
 
 function displaySongs(res) {
@@ -240,7 +257,7 @@ function addNewPlaylist(res){
 }
 
 function addNewSong(res){
-  let liStr = `<li class="songItem" id="${res._id}">${res.youTubeHash}</li>`;
+  let liStr = `<li class="songItem" id="${res._id}">${res.title}</li>`;
   $('.song-container').append(liStr);
   let li = $('.song-container li').last();
   li.click(e => {
@@ -249,6 +266,7 @@ function addNewSong(res){
     }
     selectedSongId = e.target.id;
     e.target.className += ' selectedSong';
+    setUpPlayer(res.youTubeHash);
   })
 }
 
@@ -262,12 +280,8 @@ function setCurrentUser() {
       user = res[0];
       getAllPlaylists();
     },
-    error: onError
+    error: (err) => { console.log(err); }
   });
-}
-
-function onError(xhr) {
-  console.log(xhr);
 }
 
 function queryString(obj) {
