@@ -175,11 +175,12 @@ function deleteSong(){
 //
 // CALLBACKS
 //
+let searchResults = [];
 function displaySearchResults(res) {
   let searchContainer = $('.song-search-results');
   searchContainer.empty();
-  res.items.forEach(result => {
-  console.log(result);
+  searchResults = res.items;
+  searchResults.forEach(result => {
     let id = result.id.videoId;
     let name = result.snippet.title;
     // TODO let contributor = currentUser();
@@ -193,9 +194,20 @@ function displaySearchResults(res) {
       selectedSearchResult.id = e.target.id;
       selectedSearchResult.title = e.target.innerText;
       e.target.className += ' selectedSearchResult';
-      // TODO show thumbnail for this video
+      showSearchThumbnail();
     });
   });
+}
+
+function showSearchThumbnail() {
+  let thumbnailDiv = $('#song-search-thumbnail');
+  thumbnailDiv.empty();
+  let searchResultObj = searchResults.find(function(res) {
+    return res.id.videoId === selectedSearchResult.id;
+  });
+  let thumbnailUrl = searchResultObj.snippet.thumbnails.high.url;
+  let imgStr = `<img src="${thumbnailUrl}"></img>`;
+  thumbnailDiv.append(imgStr);
 }
 
 function setUpPlayer(videoId) {
