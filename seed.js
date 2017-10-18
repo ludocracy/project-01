@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 const db = require('./models');
 
 var testSong1 = new db.Song ({
-  youTubeHash: "https://www.youtube.com/watch?v=28tZ-S1LFok"
+  title: 'testSong1',
+  youTubeHash: "28tZ-S1LFok"
 });
 
 var testSong2 = new db.Song ({
-  youTubeHash: "https://www.youtube.com/watch?v=auzfTPp4moA"
+  title: 'testSong2',
+  youTubeHash: "auzfTPp4moA"
 });
 
 var testPlaylist1 = new db.Playlist ({
