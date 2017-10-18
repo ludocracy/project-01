@@ -213,16 +213,7 @@ function displaySongs(res) {
   let songContainer = $('.song-container');
   songContainer.empty();
   res.forEach(song => {
-    let liStr = `<li class="songItem" id="${song._id}">${song.youTubeHash}</li>`;
-    songContainer.append(liStr);
-    let li = $('.song-container li').last();
-    li.click(e => {
-      if(selectedSongId){
-        $(`#${selectedSongId}`).removeClass('selectedSong');
-      }
-      selectedSongId = e.target.id;
-      e.target.className += ' selectedSong';
-    });
+    addNewSong(song);
   });
 };
 
@@ -230,17 +221,7 @@ function displayAllPlaylists(res) {
   let playlistContainer = $('.playlists-container');
   playlistContainer.empty();
   res.forEach(playlist => {
-    let liStr = `<li class="playlistItem" id="${playlist._id}">${playlist.name}: ${playlist.description}</li>`;
-    $('.playlists-container').append(liStr);
-    let li = $('.playlists-container li').last();
-    li.click(e => { // event listener for when user selects a playlist
-      if(selectedPlaylistId) {
-        $(`#${selectedPlaylistId}`).removeClass('selectedPlaylist');
-      }
-      selectedPlaylistId = e.target.id;
-      e.target.className += ' selectedPlaylist';
-      getSongs();
-    });
+    addNewPlaylist(playlist);
   });
 }
 
