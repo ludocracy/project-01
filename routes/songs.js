@@ -25,17 +25,11 @@ function createSong(req, res){
         youTubeHash: req.body.youTubeHash,
         // user: req.body.user
       });
-      newSong.save(function(err, song){
-        if(err){
-          console.log('Error saving song model to playlist.', err);
-          res.status(500).send('Internal server error.');
-        }else{
-          res.status(201).json(song);
-        }
-      })
+      newSong.save();
       //adds songs to playlist then saves the playlist
       playlist.songs.push(newSong);
       playlist.save();
+      res.json(newSong);
     };
   });
 };

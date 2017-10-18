@@ -113,7 +113,7 @@ function postSong() {
     data: {
       youTubeHash: newSong
     },
-    success: () => {}, // refresh view?
+    success: addNewSong,
     error: onError
   });
 }
@@ -183,6 +183,19 @@ function addNewPlaylist(res){
     e.target.className += ' selectedPlaylist';
     getSongs();
   });
+}
+
+function addNewSong(res){
+  let liStr = `<li class="songItem" id="${res._id}">${res.youTubeHash}</li>`;
+  $('.song-container').append(liStr);
+  let li = $('.song-container li').last();
+  li.click(e => {
+    if(selectedSongId){
+      $(`#${selectedSongId}`).removeClass('selectedSong');
+    }
+    selectedSongId = e.target.id;
+    e.target.className += ' selectedSong';
+  })
 }
 
 // TODO re-implement when we add auth!!!
