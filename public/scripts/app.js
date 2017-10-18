@@ -58,9 +58,7 @@ function postPlaylist() {
       name: newName,
       description: newDescr
     },
-    success: res => {
-      // TODO show new item in list - need a method for this?
-    }, // refresh view
+    success: addNewPlaylist,
     error: onError
   });
 }
@@ -145,7 +143,6 @@ function displaySongs(res) {
     let liStr = `<li class="songItem" id="${song._id}">${song.youTubeHash}</li>`;
     songContainer.append(liStr);
     let li = $('.song-container li').last();
-    console.log(li);
     li.click(e => {
       if(selectedSongId){
         $(`#${selectedSongId}`).removeClass('selectedSong');
@@ -157,6 +154,8 @@ function displaySongs(res) {
 };
 
 function displayAllPlaylists(res) {
+  let playlistContainer = $('.playlists-container');
+  playlistContainer.empty();
   res.forEach(playlist => {
     let liStr = `<li class="playlistItem" id="${playlist._id}">${playlist.name}: ${playlist.description}</li>`;
     $('.playlists-container').append(liStr);
@@ -169,6 +168,20 @@ function displayAllPlaylists(res) {
       e.target.className += ' selectedPlaylist';
       getSongs();
     });
+  });
+}
+
+function addNewPlaylist(res){
+  let liStr = `<li class="playlistItem" id="${res._id}">${res.name}: ${res.description}</li>`;
+  $('.playlists-container').append(liStr);
+  let li = $('.playlists-container li').last();
+  li.click(e => { // event listener for when user selects a playlist
+    if(selectedPlaylistId) {
+      $(`#${selectedPlaylistId}`).removeClass('selectedPlaylist');
+    }
+    selectedPlaylistId = e.target.id;
+    e.target.className += ' selectedPlaylist';
+    getSongs();
   });
 }
 
