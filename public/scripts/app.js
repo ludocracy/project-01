@@ -129,7 +129,9 @@ function deleteSong(){
       $(`#${selectedSongId}`).remove();
       selectedSongId = '';
     },
-    error: onError
+    error: xhr => {
+      console.log(xhr);
+    }
   });
 }
 
@@ -137,14 +139,13 @@ function deleteSong(){
 // CALLBACKS
 //
 function displaySongs(res) {
-  // console.log(selectedPlaylistId);
-  // console.log(res);
   let songContainer = $('.song-container');
   songContainer.empty();
   res.forEach(song => {
     let liStr = `<li class="songItem" id="${song._id}">${song.youTubeHash}</li>`;
     songContainer.append(liStr);
     let li = $('.song-container li').last();
+    console.log(li);
     li.click(e => {
       if(selectedSongId){
         $(`#${selectedSongId}`).removeClass('selectedSong');
