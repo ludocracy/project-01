@@ -1,14 +1,13 @@
 //
 // AJAX CALLS
 //
-
 function getSongs() {
   $.ajax({
     method: 'GET',
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
     dataType: 'json',
     success: displaySongs,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -19,10 +18,11 @@ function postSong() {
     url: `${URL}/playlists/${selectedPlaylistId}/songs`,
     dataType: 'json',
     data: {
-      youTubeHash: `https://www.youtube.com/watch?v=${selectedSearchResultId}`
+      title: selectedSearchResult.title,
+      youTubeHash: selectedSearchResult.id
     },
     success: addNewSong,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -42,22 +42,11 @@ function deleteSong(){
 }
 
 
-
-
 //
 // CALLBACKS
 //
-
-function displaySongs(res) {
-  let songContainer = $('.song-container');
-  songContainer.empty();
-  res.forEach(song => {
-    addNewSong(song);
-  });
-};
-
 function addNewSong(res){
-  let liStr = `<li class="songItem" id="${res._id}">${res.youTubeHash}</li>`;
+  let liStr = `<li class="songItem" youtube-hash="${res.youTubeHash}" id="${res._id}">${res.title}</li>`;
   $('.song-container').append(liStr);
   let li = $('.song-container li').last();
   li.click(e => {
@@ -66,5 +55,6 @@ function addNewSong(res){
     }
     selectedSongId = e.target.id;
     e.target.className += ' selectedSong';
+    setUpPlayer(res.youTubeHash);
   })
 }
