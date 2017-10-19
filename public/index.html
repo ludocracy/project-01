@@ -20,9 +20,8 @@
         <div class="playlist-crud">
           <input type="text" id="playlistName" placeholder="new playlist name" />
           <input type="textarea" id="playlistDescr" placeholder="describe this playlist or leave blank" />
-          <form>
+          <form id="initialPlaylistForm">
             <button type="submit" id="createPlaylistBtn">Create playlist</button>
-            <button id="deletePlaylistBtn">Delete playlist</button>
           </form>
         </div>
         <div class="overflow-container-playlist display-element">
@@ -30,45 +29,11 @@
           </ul>
         </div>
       </div>
-      <div class="songs-div">
-        <h2 class="playlist-name"></h2>
-        <div class="song-crud display-element">
-          <div class="song-search">
-            <form id="searchForm" style="visibility: hidden;">
-              <p>Search and Add Songs:</p>
-              <input type="text" id="songName" placeholder="new song name" />
-              <button id="youtube-search-btn" type="submit" onclick="searchResultsToggle()">Search Youtube</button>
-            </form>
-            <section id="youtube-search-res" style="visibility: hidden;">
-              <div class="song-search-results">
-
-              </div>
-              <button id="createSongBtn" onclick="searchResultsToggle()">Add song to playlist</button>
-              <div id="song-search-thumbnail">
-
-              </div>
-            </section>
-          </div>
-        </div>
-        <!-- <h3>Songs</h3> -->
-        <div class="overflow-container">
-          <p>Select a song to play:</p>
-          <ul class="song-container">
-
-        </ul>
-        <button id="deleteSongBtn">Delete song from playlist</button>
-        <div id="song-embed">
-
-        </div></br>
-      </div>
     </div>
     <footer>
 
     </footer>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="scripts/app.js" charset="utf-8"></script>
-    <script src="scripts/playlist-app.js" charset="utf-8"></script>
-    <script src="scripts/youtube-app.js" charset="utf-8"></script>
-    <script src="scripts/song-app.js" charset="utf-8"></script>
   </body>
 </html>

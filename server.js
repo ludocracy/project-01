@@ -21,9 +21,12 @@ app.get('/', Routes.home);
 
 app.get('/playlists', Routes.Playlists.getAllPlaylists);
 app.post('/playlists', Routes.Playlists.createPlaylist);
-app.get('/playlists/:id', Routes.Playlists.getOnePlaylist);
 app.put('/playlists/:id', Routes.Playlists.updatePlaylist);
 app.delete('/playlists/:id', Routes.Playlists.deletePlaylist);
+
+app.get('/playlists/:id', Routes.Playlists.getOnePlaylist);
+// when playlist is created, redirect to created playlist page
+app.get('/:id', Routes.playlist);
 
 app.get('/playlists/:id/songs', Routes.Songs.getAllSongs);
 app.post('/playlists/:id/songs', Routes.Songs.createSong);

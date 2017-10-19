@@ -1,40 +1,36 @@
+
+// global variables
+let selectedSearchResult = {};
+let selectedSongId;
+let player = null;
+const PID = window.location.pathname.slice(1);
+
+$(document).ready(function(){
+  // embed youtube video player
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  $('#deletePlaylistBtn').click(deletePlaylist);
+
+  $('#searchForm').submit(searchSong);
+  $('#createSongBtn').click(postSong);
+  $('#deleteSongBtn').click(deleteSong);
+
+  getOnePlaylist();
+});
+
+
 //
 // AJAX CALLS
 //
-// TODO we may not need this?
-function getAllPlaylists() {
-  $.ajax({
-    method: 'GET',
-    url: `${URL}/playlists`,
-    dataType: 'json',
-    success: displayAllPlaylists,
-    error: (err) => { console.log(err); }
-  });
-}
-
 function getOnePlaylist() {
   $.ajax({
     method: 'GET',
-    url: `${URL}/playlists`,
+    url: `/playlists/${PID}`,
     dataType: 'json',
-    success: displayOnePlaylist,
-    error: (err) => { console.log(err); }
-  });
-}
-
-// TODO create playlist and redirect to playlist's own page
-function postPlaylist() {
-  let newName = $('#playlistName').val();
-  let newDescr = $('#playlistDescr').val();
-  $.ajax({
-    method: 'POST',
-    url: `${URL}/playlists`,
-    dataType: 'json',
-    data: {
-      name: newName,
-      description: newDescr
-    },
-    success: addNewPlaylist,
+    success: displaySongs,
     error: (err) => { console.log(err); }
   });
 }
@@ -44,7 +40,7 @@ function updatePlaylist() {
   // TODO get updated name and description from song list display?
   $.ajax({
     method: 'PUT',
-    url: `${URL}/playlists/${selectedPlaylistId}`,
+    url: `/playlists/${PID}`,
     dataType: 'json',
     data: {
       name: '',
@@ -58,15 +54,13 @@ function updatePlaylist() {
 function deletePlaylist() {
   $.ajax({
     method: 'DELETE',
-    url: `${URL}/playlists/${selectedPlaylistId}`,
+    url: `/playlists/${PID}`,
     dataType: 'json',
     success: res => {
-      $(`#${selectedPlaylistId}`).remove();
-      selectedPlaylistId = '';
+      $(`#${PID}`).remove();
+      PID = '';
     },
-    error: xhr => {
-      console.log(xhr);
-    }
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -78,29 +72,23 @@ function deletePlaylist() {
 function displaySongs(res) {
   let songContainer = $('.song-container');
   songContainer.empty();
-  res.forEach(song => {
+  res.songs.forEach(song => {
     addNewSong(song);
   });
-};
-
-function displayAllPlaylists(res) {
-  let playlistContainer = $('.playlists-container');
-  playlistContainer.empty();
-  res.forEach(playlist => {
-    addNewPlaylist(playlist);
-  });
 }
 
-function addNewPlaylist(res){
-  let liStr = `<li class="playlistItem" id="${res._id}">${res.name}: ${res.description}</li>`;
-  $('.playlists-container').append(liStr);
-  let li = $('.playlists-container li').last();
-  li.click(e => { // event listener for when user selects a playlist
-    if(selectedPlaylistId) {
-      $(`#${selectedPlaylistId}`).removeClass('selectedPlaylist');
-    }
-    selectedPlaylistId = e.target.id;
-    e.target.className += ' selectedPlaylist';
-    getSongs();
-  });
-}
+// function displayAllPlaylists(res) {
+//   let playlistContainer = $('.playlists-container');
+//   playlistContainer.empty();
+//   res.forEach(playlist => {
+//     addNewPlaylist(playlist);
+//   });
+// }
+
+
+//when playlist is created, point window to /playlist/:(createdplaylistID)
+  //fill (DOM manipulation) page with playlist info
+
+// function addNewPlaylist(res){
+//   res.redirect(`/${}`);
+// }

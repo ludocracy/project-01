@@ -48,11 +48,13 @@ function searchSong(e) {
 }
 
 
-
 //
 // CALLBACKS
 //
+
+// allows showSearchThumbnail to get one thumbnail from individual search result
 let searchResults = [];
+
 function displaySearchResults(res) {
   let searchContainer = $('.song-search-results');
   searchContainer.empty();

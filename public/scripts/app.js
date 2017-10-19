@@ -1,47 +1,27 @@
-const URL = window.location.href.slice(0,-1);
-// TODO remove when we implement auth
-// end
-let selectedPlaylistId = '';
-let selectedSongId = '';
-let selectedSearchResult = {};
-let player = null;
-
 $(document).ready(function(){
-  // embed youtube video player
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  $('#initialPlaylistForm').click(postPlaylist);
 
-  $('#createPlaylistBtn').click(postPlaylist);
-  $('#deletePlaylistBtn').click(deletePlaylist);
-
-  $('#searchForm').submit(searchSong);
-  $('#createSongBtn').click(postSong);
-  $('#deleteSongBtn').click(deleteSong);
-
-  // TODO we may not need This
-  getAllPlaylists();
+  // note: we need this for admin page
+  // getAllPlaylists();
 });
 
-function searchResultsToggle(){
-  let elem = document.getElementById('youtube-search-res');
-  let btn = document.getElementById('youtube-search-btn');
-  if(elem.style.visibility === "hidden"){
-    elem.style.visibility = "visible";
-    btn.onclick = '';
-  }else{
-    btn.onclick = function() {searchResultsToggle()};
-    elem.style.visibility = 'hidden';
-  };
-  $('#song-search-thumbnail').empty();
+function postPlaylist(e) {
+  e.preventDefault();
+  let newName = $('#playlistName').val();
+  let newDescr = $('#playlistDescr').val();
+  $.ajax({
+    method: 'POST',
+    url: `/playlists`,
+    dataType: 'json',
+    data: {
+      name: newName,
+      description: newDescr
+    },
+    success: redirectFunction,
+    error: (err) => { console.log(err); }
+  });
 }
 
-function youtubeSearchToggle(){
-  let elem = document.getElementById('searchForm');
-  if(selectedPlaylistId === ''){
-    elem.style.visibility = 'hidden';
-  }else{
-    elem.style.visibility = 'visible';
-  };
+function redirectFunction(res){
+  window.location.replace(`/${res._id}`);
 }
