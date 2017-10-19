@@ -12,7 +12,8 @@ function onPlayerStateChange(event) {
     if(playingSongIndex < songs.length) {
       playingSongIndex++;
     } else {
-      playingSongIndex = 0;
+      // TODO only loop if user chooses?
+      playingSongIndex = 1;
     }
     let songLi = $(`.songItem:nth-child(${playingSongIndex})`)
     let songId = songLi.attr('youtube-hash');
