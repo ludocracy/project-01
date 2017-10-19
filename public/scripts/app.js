@@ -1,10 +1,14 @@
+// pulls URL of the backend from browser
 const URL = window.location.href.slice(0,-1);
-// TODO remove when we implement auth
-// end
+
+// global variables
 let selectedPlaylistId = '';
-let selectedSongId = '';
 let selectedSearchResult = {};
 let player = null;
+
+// TODO: re-eval keeping this
+let selectedSongId = '';
+
 
 $(document).ready(function(){
   // embed youtube video player
@@ -20,6 +24,7 @@ $(document).ready(function(){
   $('#createSongBtn').click(postSong);
   $('#deleteSongBtn').click(deleteSong);
 
-  // TODO we may not need This
+  // TODO: move this once users have been integrated
+  // note: we need this for admin page
   getAllPlaylists();
 });
