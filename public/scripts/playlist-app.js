@@ -64,9 +64,7 @@ function deletePlaylist() {
       $(`#${selectedPlaylistId}`).remove();
       selectedPlaylistId = '';
     },
-    error: xhr => {
-      console.log(xhr);
-    }
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -81,7 +79,7 @@ function displaySongs(res) {
   res.forEach(song => {
     addNewSong(song);
   });
-};
+}
 
 function displayAllPlaylists(res) {
   let playlistContainer = $('.playlists-container');
