@@ -15,12 +15,6 @@
   margin: 10px;
 }
 
-#song-embed {
-  max-width: 100%;
-  max-height: 100%;
-  min-width: inherit;
-}
-
 /*MAIN*/
 
 /** {
@@ -29,6 +23,7 @@
 
 html {
   height:99%;
+  max-height: 95vh;
 }
 
 body {
@@ -117,6 +112,15 @@ h1 {
 #song-embed {
   margin: 0 auto;
   flex-direction: column;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 100%;
+}
+
+#thumbnail-photo{
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 100%;
 }
 
 #createSongBtn, #deleteSongBtn {
@@ -128,4 +132,17 @@ h1 {
   min-height: 300px;
   max-height: 300px;
   /*overflow-y: hidden;*/
+}
+
+@media only screen and (max-width: 800px){
+  html{
+    text-align: center;
+  }
+  .songs-div {
+    flex-direction: column-reverse;
+  }
+  .song-crud, .display-element{
+    width: 100%;
+    max-width: inherit;
+  }
 }
