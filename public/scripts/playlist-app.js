@@ -56,20 +56,21 @@ function deletePlaylist() {
     method: 'DELETE',
     url: `/playlists/${PID}`,
     dataType: 'json',
-    success: res => {
-      $(`#${PID}`).remove();
-      PID = '';
-    },
+    success: redirectFunction,
     error: (err) => { console.log(err); }
   });
 }
 
-
+function redirectFunction(res){
+  window.location.replace(`/`);
+}
 
 //
 // CALLBACKS
 //
 function displaySongs(res) {
+  $('.playlist-name').text(res.name);
+  $('.playlist-descr').text(res.description);
   let songContainer = $('.song-container');
   songContainer.empty();
   res.songs.forEach(song => {
