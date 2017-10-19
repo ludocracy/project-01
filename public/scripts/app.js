@@ -24,6 +24,20 @@ $(document).ready(function(){
   getAllPlaylists();
 });
 
-function alertFunction(){
-  alert("ok we did it");
+function searchResultsToggle(){
+  let elem = document.getElementById('youtube-search');
+  if(elem.style.display === 'none'){
+    elem.style.display = 'inline';
+  }else{
+    elem.style.display = 'none';
+  };
+}
+
+function youtubeSearchToggle(){
+  let elem = document.getElementById('searchForm');
+  if(selectedPlaylistId === ''){
+    elem.style.display = 'none';
+  }else{
+    elem.style.display = 'inline';
+  };
 }

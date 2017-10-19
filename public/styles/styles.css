@@ -18,6 +18,7 @@
 #song-embed {
   max-width: 100%;
   max-height: 100%;
+  min-width: inherit;
 }
 
 /*MAIN*/
@@ -104,9 +105,17 @@ h1 {
   overflow-y: scroll;
 }
 
+.song-container{
+  margin: 5px 0;
+}
+
 .song-search {
   display: flex;
   flex-direction: column;
+}
+
+#youtube-search, #searchForm{
+  display: none;
 }
 
 #song-embed {
