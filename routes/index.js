@@ -6,7 +6,6 @@ module.exports = {
   },
 
   playlist: function(req, res) {
-    console.log('trying to send: ', __dirname+'/../public/playlist.html');
     res.sendFile(path.join(__dirname, '/../public/playlist.html'));
   },
 

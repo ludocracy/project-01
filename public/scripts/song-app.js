@@ -4,7 +4,7 @@
 function getSongs() {
   $.ajax({
     method: 'GET',
-    url: `${URL}/playlists/${selectedPlaylistId}/songs`,
+    url: `/playlists/${PID}/songs`,
     dataType: 'json',
     success: displaySongs,
     error: (err) => { console.log(err); }
@@ -12,13 +12,9 @@ function getSongs() {
 }
 
 function postSong() {
-  // TODO: remove when playlist is in session
-  // prevents client from adding song when no playlist is selected
-  if(selectedPlaylistId === '') { return; }
-
   $.ajax({
     method: 'POST',
-    url: `${URL}/playlists/${selectedPlaylistId}/songs`,
+    url: `/playlists/${PID}/songs`,
     dataType: 'json',
     data: {
       title: selectedSearchResult.title,
@@ -32,7 +28,7 @@ function postSong() {
 function deleteSong(){
   $.ajax({
     method: 'DELETE',
-    url: `${URL}/playlists/${selectedPlaylistId}/songs/${selectedSongId}`,
+    url: `/playlists/${PID}/songs/${selectedSongId}`,
     dataType: 'json',
     success: res => {
       $(`#${selectedSongId}`).remove();

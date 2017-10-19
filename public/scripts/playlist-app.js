@@ -1,10 +1,9 @@
 
 // global variables
 let selectedSearchResult = {};
+let selectedSongId;
 let player = null;
-
-// TODO: re-eval keeping this
-let selectedSongId = '';
+const PID = window.location.pathname.slice(1);
 
 $(document).ready(function(){
   // embed youtube video player
@@ -29,32 +28,11 @@ $(document).ready(function(){
 function getOnePlaylist() {
   $.ajax({
     method: 'GET',
-    url: `/playlists`,
+    url: `/playlists/${PID}`,
     dataType: 'json',
     success: displaySongs,
     error: (err) => { console.log(err); }
   });
-}
-
-// TODO create playlist and redirect to playlist's own page
-function postPlaylist() {
-  let newName = $('#playlistName').val();
-  let newDescr = $('#playlistDescr').val();
-  $.ajax({
-    method: 'POST',
-    url: `/playlists`,
-    dataType: 'json',
-    data: {
-      name: newName,
-      description: newDescr
-    },
-    success: redirectFunction,
-    error: (err) => { console.log(err); }
-  });
-}
-
-function redirectFunction(res){
-  window.location.replace(`/playlistPage/${res._id}`);
 }
 
 // TODO probably gets called by clicking on playlist name when it appears in song list?
@@ -62,7 +40,7 @@ function updatePlaylist() {
   // TODO get updated name and description from song list display?
   $.ajax({
     method: 'PUT',
-    url: `/playlists/${selectedPlaylistId}`,
+    url: `/playlists/${PID}`,
     dataType: 'json',
     data: {
       name: '',
@@ -76,11 +54,11 @@ function updatePlaylist() {
 function deletePlaylist() {
   $.ajax({
     method: 'DELETE',
-    url: `/playlists/${selectedPlaylistId}`,
+    url: `/playlists/${PID}`,
     dataType: 'json',
     success: res => {
-      $(`#${selectedPlaylistId}`).remove();
-      selectedPlaylistId = '';
+      $(`#${PID}`).remove();
+      PID = '';
     },
     error: (err) => { console.log(err); }
   });
@@ -94,7 +72,7 @@ function deletePlaylist() {
 function displaySongs(res) {
   let songContainer = $('.song-container');
   songContainer.empty();
-  res.forEach(song => {
+  res.songs.forEach(song => {
     addNewSong(song);
   });
 }
