@@ -1,11 +1,12 @@
 $(document).ready(function(){
-  $('#createPlaylistBtn').click(postPlaylist);
+  $('#initialPlaylistForm').click(postPlaylist);
 
   // note: we need this for admin page
   // getAllPlaylists();
 });
 
-function postPlaylist() {
+function postPlaylist(e) {
+  e.preventDefault();
   let newName = $('#playlistName').val();
   let newDescr = $('#playlistDescr').val();
   $.ajax({
