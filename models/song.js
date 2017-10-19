@@ -3,13 +3,7 @@ const mongoose = require('mongoose'),
 
 const SongSchema = new Schema({
   title: { type: String, required: true },
-  youTubeHash: { type: String, required: true },
-  // contributor of this specific song
-  // user: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User',
-  //   required: true,
-  // }
+  youTubeHash: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Song', SongSchema);

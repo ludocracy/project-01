@@ -1,10 +1,11 @@
 //
 // AJAX CALLS
 //
+// TODO we may not need this?
 function getAllPlaylists() {
   $.ajax({
     method: 'GET',
-    url: `${URL}/users/${user._id}/playlists`,
+    url: `${URL}/playlists`,
     dataType: 'json',
     success: displayAllPlaylists,
     error: (err) => { console.log(err); }
@@ -14,19 +15,20 @@ function getAllPlaylists() {
 function getOnePlaylist() {
   $.ajax({
     method: 'GET',
-    url: `${URL}/users/${user._id}/playlists`,
+    url: `${URL}/playlists`,
     dataType: 'json',
     success: displayOnePlaylist,
     error: (err) => { console.log(err); }
   });
 }
 
+// TODO create playlist and redirect to playlist's own page
 function postPlaylist() {
   let newName = $('#playlistName').val();
   let newDescr = $('#playlistDescr').val();
   $.ajax({
     method: 'POST',
-    url: `${URL}/users/${user._id}/playlists`,
+    url: `${URL}/playlists`,
     dataType: 'json',
     data: {
       name: newName,
@@ -100,19 +102,5 @@ function addNewPlaylist(res){
     selectedPlaylistId = e.target.id;
     e.target.className += ' selectedPlaylist';
     getSongs();
-  });
-}
-
-// TODO re-implement when we add auth!!!
-function setCurrentUser() {
-  $.ajax({
-    method: 'GET',
-    url: URL + '/users',
-    dataType: 'json',
-    success: function (res) {
-      user = res[0];
-      getAllPlaylists();
-    },
-    error: (err) => { console.log(err); }
   });
 }

@@ -2,6 +2,36 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const db = require('../models');
 
+
+//Retrieves an array of playlists
+// TODO may not need this?
+function getAllPlaylists(req, res){
+  db.Playlist.find({}, (err, foundPlaylists) => {
+    if(err){
+      console.log('Error retrieving playlists', err);
+    } else {
+      res.json(foundPlaylists);
+    }
+  });
+};
+
+//Creates a playlist
+function createPlaylist(req, res){
+  const newPlaylist = db.Playlist({
+    name: req.body.name,
+    description: req.body.description,
+    songs: req.body.songs,
+  });
+  newPlaylist.save(function(err, playlist){
+    if(err) {
+      console.log('Error creating playlist', err);
+      res.status(500).send('Internal Server Error.');
+    } else {
+      res.json(playlist);
+    };
+  });
+};
+
 //Retrieves a playlist and returns them in a JSON object
 function getOnePlaylist(req, res){
   db.Playlist.findById(req.params.id, function(err, data){
@@ -10,19 +40,6 @@ function getOnePlaylist(req, res){
       res.status(500).send('Internal server error.');
     }else{
       res.json(data);
-    };
-  });
-};
-
-
-//Retrieves the contributors to a playlist TODO: INTEGRATE USERS TO PLAYLIST SCHEMA
-function getAllContributors(req, res){
-  db.Playlist.findById(req.params.id, function(err, data){
-    if(err){
-      console.log('Error retrieving the constributors of this playlist.', err);
-      res.status(500).send('Internal server error.');
-    }else{
-      res.status(201).json(data.users);
     };
   });
 };
@@ -43,25 +60,21 @@ function updatePlaylist(req, res){
   });
 };
 
-//Deletes playlist TODO: REMOVE REFERENCES TO PLAYLIST IN USERS' ARRAYS
+//Deletes playlist
 function deletePlaylist(req, res){
   db.Playlist.findByIdAndRemove(req.params.id, function(err, playlistDeleted){
     if(err){
       console.log('Error deleting this playlist.', err);
       res.status(500).send('Internal server error.');
     }else{
-      let ownerId = playlistDeleted.users[0];
-      db.User.findById(ownerId, (err, foundOwner) => {
-        foundOwner.playlists.splice(foundOwner.playlists.indexOf(playlistDeleted._id));
-        foundOwner.save();
-      })
       res.json({});
     };
   });
 };
 
 module.exports = {
-  getAllContributors: getAllContributors,
+  getAllPlaylists: getAllPlaylists,
+  createPlaylist: createPlaylist,
   getOnePlaylist: getOnePlaylist,
   deletePlaylist: deletePlaylist,
   updatePlaylist: updatePlaylist
