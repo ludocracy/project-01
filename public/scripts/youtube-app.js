@@ -12,7 +12,7 @@ function onPlayerStateChange(event) {
     if(playingSongIndex < songs.length) {
       playingSongIndex++;
     } else {
-      // TODO only loop if user chooses?
+      // TODO only loop if client chooses?
       playingSongIndex = 1;
     }
     let songLi = $(`.songItem:nth-child(${playingSongIndex})`)
@@ -60,7 +60,6 @@ function displaySearchResults(res) {
   searchResults.forEach(result => {
     let id = result.id.videoId;
     let name = result.snippet.title;
-    // TODO let contributor = currentUser();
     let liStr = `<li class="song-search-result" id="${id}">${name}</li>`;
     searchContainer.append(liStr);
     let li = $('.song-search-results li').last();

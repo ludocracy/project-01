@@ -4,6 +4,7 @@ const db = require('../models');
 
 
 //Retrieves an array of playlists
+// TODO may not need this?
 function getAllPlaylists(req, res){
   db.Playlist.find({}, (err, foundPlaylists) => {
     if(err){
