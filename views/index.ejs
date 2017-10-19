@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" type="text/css" href="../styles/reset.css" />
     <link rel="stylesheet" type="text/css" href="../styles/styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   </head>
   <body>
     <header>
@@ -21,8 +23,10 @@
           <button id="createPlaylistBtn">Create playlist</button>
           <button id="deletePlaylistBtn">Delete playlist</button>
         </div>
-        <ul class="playlists-container">
-        </ul>
+        <div class="overflow-container-playlist">
+          <ul class="playlists-container">
+          </ul>
+        </div>
       </div>
       <div class="songs-div">
         <h2 class="playlist-name"></h2>
@@ -32,6 +36,8 @@
               <input type="text" id="songName" placeholder="new song name" />
               <button type="submit">Search Youtube</button>
             </form>
+            <button id="createSongBtn">Add song to playlist</button>
+            <button id="deleteSongBtn">Delete song from playlist</button>
             <div class="song-search-results">
 
             </div>
@@ -39,10 +45,10 @@
 
             </div>
           </div>
-          <button id="createSongBtn">Create song</button>
-          <button id="deleteSongBtn">Delete song</button>
         </div>
-        <ul class="song-container">
+        <!-- <h3>Songs</h3> -->
+        <div class="overflow-container">
+          <ul class="song-container">
 
         </ul>
         <div id="song-embed">
