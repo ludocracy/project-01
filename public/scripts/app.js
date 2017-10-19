@@ -26,3 +26,7 @@ $(document).ready(function(){
   $('#createSongBtn').click(postSong);
   $('#deleteSongBtn').click(deleteSong);
 });
+
+function alertFunction(){
+  alert("ok we did it");
+}
