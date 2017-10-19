@@ -8,11 +8,6 @@ const PlaylistSchema = new Schema({
   songs: [{
     type: Schema.Types.ObjectId,
     ref: 'Song'
-  }],
-  // contributors to the playlist
-  users: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User'
   }]
 });
 

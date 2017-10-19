@@ -10,7 +10,6 @@ mongoose.connection.openUri(process.env.MONGODB_URI, (err, conn) => {
 });
 
 module.exports = {
-  User: require('./user'),
   Playlist: require('./playlist'),
   Song: require('./song'),
 }

@@ -24,7 +24,6 @@ function createSong(req, res){
       const newSong = db.Song({
         title: req.body.title,
         youTubeHash: req.body.youTubeHash,
-        // user: req.body.user
       });
       newSong.save(function(err, data){
         if(err){
