@@ -25,19 +25,23 @@ $(document).ready(function(){
 });
 
 function searchResultsToggle(){
-  let elem = document.getElementById('youtube-search');
-  if(elem.style.display === 'none'){
-    elem.style.display = 'inline';
+  let elem = document.getElementById('youtube-search-res');
+  let btn = document.getElementById('youtube-search-btn');
+  if(elem.style.visibility === "hidden"){
+    elem.style.visibility = "visible";
+    btn.onclick = '';
   }else{
-    elem.style.display = 'none';
+    btn.onclick = function() {searchResultsToggle()};
+    elem.style.visibility = 'hidden';
   };
+  $('#song-search-thumbnail').empty();
 }
 
 function youtubeSearchToggle(){
   let elem = document.getElementById('searchForm');
   if(selectedPlaylistId === ''){
-    elem.style.display = 'none';
+    elem.style.visibility = 'hidden';
   }else{
-    elem.style.display = 'inline';
+    elem.style.visibility = 'visible';
   };
 }

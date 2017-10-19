@@ -34,16 +34,16 @@
         <h2 class="playlist-name"></h2>
         <div class="song-crud display-element">
           <div class="song-search">
-            <form id="searchForm">
+            <form id="searchForm" style="visibility: hidden;">
               <p>Search and Add Songs:</p>
               <input type="text" id="songName" placeholder="new song name" />
-              <button type="submit" onclick="searchResultsToggle()">Search Youtube</button>
+              <button id="youtube-search-btn" type="submit" onclick="searchResultsToggle()">Search Youtube</button>
             </form>
-            <section id="youtube-search">
-              <button id="createSongBtn" onclick="searchResultsToggle()">Add song to playlist</button>
+            <section id="youtube-search-res" style="visibility: hidden;">
               <div class="song-search-results">
 
               </div>
+              <button id="createSongBtn" onclick="searchResultsToggle()">Add song to playlist</button>
               <div id="song-search-thumbnail">
 
               </div>

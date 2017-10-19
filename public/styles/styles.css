@@ -114,10 +114,6 @@ h1 {
   flex-direction: column;
 }
 
-#youtube-search, #searchForm{
-  display: none;
-}
-
 #song-embed {
   margin: 0 auto;
   flex-direction: column;
