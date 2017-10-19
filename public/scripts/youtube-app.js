@@ -1,14 +1,25 @@
 //
 // YOUTUBE EMBED CODE
 //
-
 function onPlayerReady(event) {
   event.target.playVideo();
 }
-
+let playingSongIndex = 1;
 function onPlayerStateChange(event) {
-  if (event.data != YT.PlayerState.PLAYING) {
+  if (event.data === YT.PlayerState.ENDED) {
     // TODO play next song
+    let songs = $(`.songItem`);
+    if(playingSongIndex < songs.length) {
+      playingSongIndex++;
+    } else {
+      // TODO only loop if user chooses?
+      playingSongIndex = 1;
+    }
+    let songLi = $(`.songItem:nth-child(${playingSongIndex})`)
+    let songId = songLi.attr('youtube-hash');
+    console.log();
+    setUpPlayer(songId);
+
     // TODO check for updates
   }
 }

@@ -46,7 +46,7 @@ function deleteSong(){
 // CALLBACKS
 //
 function addNewSong(res){
-  let liStr = `<li class="songItem" id="${res._id}">${res.title}</li>`;
+  let liStr = `<li class="songItem" youtube-hash="${res.youTubeHash}" id="${res._id}">${res.title}</li>`;
   $('.song-container').append(liStr);
   let li = $('.song-container li').last();
   li.click(e => {
