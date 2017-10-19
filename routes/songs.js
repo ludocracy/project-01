@@ -9,8 +9,9 @@ function getAllSongs(req, res){
     if(err){
       console.log('Error finding this playlist.', err);
       res.status(500).send('Internal server error.');
+    }else{
+      res.json(foundPlaylist.songs);
     }
-    res.json(foundPlaylist.songs);
   })
 };
 
@@ -56,8 +57,14 @@ function deleteSong(req, res){
       }else{
         let deadIdIndex = foundPlaylist.songs.indexOf(req.params.sid);
         foundPlaylist.songs.splice(deadIdIndex, 1);
-        foundPlaylist.save();
-        res.json({});
+        foundPlaylist.save(function(err, data){
+          if(err){
+            console.log('Error saving playlist after deleting song.', err);
+            res.status(500).send('Internal server error.');
+          }else{
+            res.json({});
+          }
+        });
       }
     });
   });

@@ -84,7 +84,7 @@ function showSearchThumbnail() {
     return res.id.videoId === selectedSearchResult.id;
   });
   let thumbnailUrl = searchResultObj.snippet.thumbnails.high.url;
-  let imgStr = `<img src="${thumbnailUrl}"></img>`;
+  let imgStr = `<img src="${thumbnailUrl}" id="thumbnail-photo"></img>`;
   thumbnailDiv.append(imgStr);
 }
 
