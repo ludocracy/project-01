@@ -1,14 +1,13 @@
 //
 // AJAX CALLS
 //
-
 function getAllPlaylists() {
   $.ajax({
     method: 'GET',
     url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
     success: displayAllPlaylists,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -18,7 +17,7 @@ function getOnePlaylist() {
     url: `${URL}/users/${user._id}/playlists`,
     dataType: 'json',
     success: displayOnePlaylist,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -34,7 +33,7 @@ function postPlaylist() {
       description: newDescr
     },
     success: addNewPlaylist,
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -50,7 +49,7 @@ function updatePlaylist() {
       description: ''
     },
     success: displaySongs, // refresh view
-    error: onError
+    error: (err) => { console.log(err); }
   });
 }
 
@@ -70,10 +69,17 @@ function deletePlaylist() {
 }
 
 
+
 //
 // CALLBACKS
 //
-
+function displaySongs(res) {
+  let songContainer = $('.song-container');
+  songContainer.empty();
+  res.forEach(song => {
+    addNewSong(song);
+  });
+};
 
 function displayAllPlaylists(res) {
   let playlistContainer = $('.playlists-container');
@@ -94,5 +100,19 @@ function addNewPlaylist(res){
     selectedPlaylistId = e.target.id;
     e.target.className += ' selectedPlaylist';
     getSongs();
+  });
+}
+
+// TODO re-implement when we add auth!!!
+function setCurrentUser() {
+  $.ajax({
+    method: 'GET',
+    url: URL + '/users',
+    dataType: 'json',
+    success: function (res) {
+      user = res[0];
+      getAllPlaylists();
+    },
+    error: (err) => { console.log(err); }
   });
 }
