@@ -72,11 +72,3 @@ function searchResultsToggle(){
   };
   $('#song-search-thumbnail').empty();
 }
-
-// function youtubeSearchToggle(){
-//   let elem = document.getElementById('searchForm');
-//   if(selectedPlaylistId === ''){
-//     elem.style.visibility = 'hidden';
-//   }else{
-//     elem.style.visibility = 'visible';
-//   };
