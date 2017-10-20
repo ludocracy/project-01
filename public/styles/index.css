@@ -18,11 +18,12 @@ h1 {
   text-shadow: 3px 3px 1px black;
   margin-top: 5%;
   color:#90FFA4;
+  letter-spacing: 8px;
 }
 
 h2 {
   color: black;
-  font-size: 300%;
+  font-size: 250%;
   margin-top: 3%;
   text-shadow: 3px 3px 1px black;
   margin-bottom: 3%;
