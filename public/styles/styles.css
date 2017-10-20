@@ -17,9 +17,9 @@
 
 /*MAIN*/
 
-/** {
+* {
   border: 1px solid grey !important;
-}*/
+}
 
 html {
   height:99%;
@@ -39,6 +39,13 @@ body {
   margin: 30px;
   width: auto;
   font-family: 'Roboto', sans-serif;
+}
+
+header{
+  float: right;
+  /*position: relative;*/
+  display: inline-block;
+  text-align: right;
 }
 
 main {
@@ -88,6 +95,7 @@ h1 {
   order: 2;
   max-height: 650px;
   width: 50%;
+  margin-left: 0;
 }
 
 .song-container,#song-embed  {
@@ -104,6 +112,10 @@ h1 {
   margin: 5px 0;
 }
 
+.song-crud {
+  float: left;
+}
+
 .song-search {
   display: flex;
   flex-direction: column;
@@ -113,36 +125,68 @@ h1 {
   margin: 0 auto;
   flex-direction: column;
   max-width: 100%;
-  max-height: 100%;
-  min-width: 100%;
 }
 
 #thumbnail-photo{
   max-width: 100%;
   max-height: 100%;
-  min-width: 100%;
+  text-align: center;
 }
 
-#createSongBtn, #deleteSongBtn {
-
+#show-prompt {
+  display: none;
 }
 
 .overflow-container {
+  text-align: right;
   min-width: 50%;
   min-height: 300px;
   max-height: 300px;
+  position:absolute;
+  top: 150px;
+  right:0;
   /*overflow-y: hidden;*/
 }
 
-@media only screen and (max-width: 800px){
+/*@media only (min-width: 500px) and (max-width:1180){
+  #thumbnail-photo{
+    display: none;
+  }
+}*/
+@media only screen and (max-width: 1190px){
+  #thumbnail-photo{
+    max-width: 75%
+  }
+}
+
+@media only screen and (max-width: 950px){
   html{
     text-align: center;
   }
-  .songs-div {
-    flex-direction: column-reverse;
+  .playlist-div {
+    flex-direction: column;
   }
   .song-crud, .display-element{
     width: 100%;
     max-width: inherit;
+    float: none;
+    display: inline-block;
+  }
+
+  #song-embed, #select-prompt, #thumbnail-photo{
+    display: none;
+  }
+
+  #show-prompt{
+    display: contents;
+  }
+
+  .overflow-container {
+    min-width: 50%;
+    min-height: 300px;
+    max-height: 300px;
+    position: inherit;
+    text-align: center;
+    /*overflow-y: hidden;*/
   }
 }
