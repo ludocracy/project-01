@@ -1,8 +1,4 @@
 /*TESTING*/
-.selectedPlaylist {
-  background-color: pink;
-}
-
 .selectedSong {
   background-color: #90FFA4;
 }
@@ -21,35 +17,6 @@
   border: 1px solid grey !important;
 }*/
 
-button {
-  text-decoration: none;
-  margin: 3px;
-  border-radius: 20px 30px / 10px 5%;
-  display: inline;
-}
-
-#playlist-title, p{
-  color: #90FFA4;
-  text-shadow: 1px 0px 3px black;
-}
-
-li{
-  border-radius: 10px 5% / 20px 30px;
-  list-style: none;
-}
-
-.song-search-results, .song-container{
-  opacity: 1;
-  background-color: #FF5F72;
-  border-radius: 10px 20px / 5px 5%;
-  padding: 10px;
-  margin: 3px;
-}
-
-.song-container {
-  padding: 5px;
-  border-radius: 20px 30px / 10px 5%;
-}
 
 html {
   background-color: #FFBFCA;
@@ -91,12 +58,71 @@ h1 {
   font-size: 60px;
 }
 
-.playlists-div, .playlist-crud, #youtube-search-res {
-  margin-bottom: 10px;
+button {
+  text-decoration: none;
+  margin: 3px;
+  border-radius: 20px 30px / 10px 5%;
+  display: inline;
+  box-shadow: 2px 2px 1px black;
 }
 
-#playlistDescr {
-  width: 67%;
+button:hover {
+  background-color: #FF5F72;
+  transition: .5s;
+}
+
+input:focus, button:focus{
+  outline: none;
+  background-color: #FF5F72;
+}
+
+li{
+  border-radius: 10px 5% / 20px 30px;
+  list-style: none;
+  padding: 0 7px;
+}
+
+li:hover {
+  text-shadow: 1px 1px 0px black;
+  transition: .2s;
+}
+
+input {
+  border-radius: 20px 30px / 10px 5%;
+  background-color: #90FFA4;
+  box-shadow: 2px 2px 1px black;
+  padding: 0 7px;
+}
+
+p, #playlist-title {
+  color: #90FFA4;
+  text-shadow: 1px 0px 3px black;
+  text-transform: capitalize;
+}
+
+/*Classes*/
+
+.song-search-results, .song-container{
+  opacity: 1;
+  background-color: #FF5F72;
+  border-radius: 10px 20px / 5px 5%;
+  padding: 10px;
+  margin: 3px;
+}
+
+.song-container {
+  padding: 5px;
+  border-radius: 20px 30px / 10px 5%;
+}
+
+.overflow-container {
+  text-align: right;
+  min-width: 50%;
+  min-height: 300px;
+  max-height: 300px;
+  position:absolute;
+  top: 150px;
+  right:0;
 }
 
 .overflow-container-playlist {
@@ -120,16 +146,6 @@ h1 {
   margin-left: 0;
 }
 
-.song-container,#song-embed  {
-  max-height: 300px;
-  min-width: 50%;
-  display: flex;
-  flex-direction: column;
-  order: 1;
-  background-color: rgba(255, 0, 0, 0.5); /*for TESTING purposes*/
-  overflow-y: scroll;
-}
-
 .song-container{
   margin: 5px 0;
 }
@@ -143,32 +159,47 @@ h1 {
   flex-direction: column;
 }
 
+.playlists-div, .playlist-crud, #youtube-search-res {
+  margin-bottom: 10px;
+}
+
+.song-container,#song-embed  {
+  max-height: 300px;
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  order: 1;
+  overflow-y: scroll;
+}
+
+/*ID's*/
+
 #song-embed {
   margin: 0 auto;
   flex-direction: column;
-  max-width: 100%;
+  max-width: 80%;
 }
 
 #thumbnail-photo{
   max-width: 100%;
   max-height: 100%;
   text-align: center;
+  box-shadow: 4px 4px 4px #FF5E73;
+}
+
+#song-search-thumbnail{
+  margin-top: 10px;
 }
 
 #show-prompt {
   display: none;
 }
 
-.overflow-container {
-  text-align: right;
-  min-width: 50%;
-  min-height: 300px;
-  max-height: 300px;
-  position:absolute;
-  top: 150px;
-  right:0;
-  /*overflow-y: hidden;*/
+#playlistDescr {
+  width: 67%;
 }
+
+/*Media Queries*/
 
 @media only (min-width: 500px) and (max-width:1180){
   #thumbnail-photo{
@@ -207,13 +238,6 @@ h1 {
     display: inline-block;
   }
 
-  #select-prompt, #thumbnail-photo{
-    display: none;
-  }
-
-  #show-prompt{
-    display: contents;
-  }
 
   .overflow-container {
     min-width: 50%;
@@ -229,4 +253,5 @@ h1 {
   .overflow-container {
     display: none;
   }
+
 }
