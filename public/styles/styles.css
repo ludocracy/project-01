@@ -4,11 +4,11 @@
 }
 
 .selectedSong {
-  background-color: blue;
+  background-color: #90FFA4;
 }
 
 .selectedSearchResult {
-  background-color: yellow;
+  background-color: #90FFA4;
 }
 
 .display-element{
@@ -17,17 +17,47 @@
 
 /*MAIN*/
 
-* {
+/** {
   border: 1px solid grey !important;
+}*/
+
+button {
+  text-decoration: none;
+  margin: 3px;
+  border-radius: 20px 30px / 10px 5%;
+  display: inline;
+}
+
+#playlist-title, p{
+  color: #90FFA4;
+  text-shadow: 1px 0px 3px black;
+}
+
+li{
+  border-radius: 10px 5% / 20px 30px;
+  list-style: none;
+}
+
+.song-search-results, .song-container{
+  opacity: 1;
+  background-color: #FF5F72;
+  border-radius: 10px 20px / 5px 5%;
+  padding: 10px;
+  margin: 3px;
+}
+
+.song-container {
+  padding: 5px;
+  border-radius: 20px 30px / 10px 5%;
 }
 
 html {
+  background-color: #FFBFCA;
   height:99%;
   max-height: 95vh;
 }
 
 body {
-  /*height: 99%;*/
   position:absolute;
   top:0;
   bottom:0;
@@ -43,7 +73,6 @@ body {
 
 header{
   float: right;
-  /*position: relative;*/
   display: inline-block;
   text-align: right;
 }
@@ -58,23 +87,16 @@ h1 {
   font-size: 32px;
   font-weight: 500;
   margin-bottom: 10px;
+  text-shadow: 2px 2px 0px black;
+  font-size: 60px;
 }
 
-.playlists-div, .playlist-crud {
+.playlists-div, .playlist-crud, #youtube-search-res {
   margin-bottom: 10px;
 }
 
 #playlistDescr {
   width: 67%;
-}
-
-.playlists-container {
-  font-size: 24px;
-  flex-direction: column;
-  display: flex;
-  min-height: 80px;
-  max-height: 80px;
-  overflow-y: scroll;
 }
 
 .overflow-container-playlist {
@@ -159,6 +181,18 @@ h1 {
   }
 }
 
+@media only screen and (max-width: 1090px){
+  #thumbnail-photo{
+    max-width: 60%
+  }
+}
+
+@media only screen and (max-width: 1000px){
+  #thumbnail-photo{
+    max-width: 50%
+  }
+}
+
 @media only screen and (max-width: 950px){
   html{
     text-align: center;
@@ -173,7 +207,7 @@ h1 {
     display: inline-block;
   }
 
-  #song-embed, #select-prompt, #thumbnail-photo{
+  #select-prompt, #thumbnail-photo{
     display: none;
   }
 
@@ -188,5 +222,11 @@ h1 {
     position: inherit;
     text-align: center;
     /*overflow-y: hidden;*/
+  }
+}
+
+@media only screen and (max-width: 595px){
+  .overflow-container {
+    display: none;
   }
 }
