@@ -12,6 +12,8 @@ $(document).ready(function(){
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+  $('#go-home').click(redirectFunction);
+
   $('#deletePlaylistBtn').click(deletePlaylist);
 
   $('#searchForm').submit(searchSong);

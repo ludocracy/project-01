@@ -1,6 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const db = require('../models');
+const express = require('express');
+const app = express();
+
+// set up sockets!!!
+const WebSocketServer = require('ws').Server;
+const wss = new WebSocketServer({ port: 9090 });
+
+// posts 'update' to all clients, prompting them to get the latest songs
+function broadcastUpdate() {
+  wss.clients.forEach(function each(client) {
+    console.log('broadcasting!');
+    client.send("update");
+  });
+}
 
 //Retrieves all songs in playlist and returns them in a JSON object
 function getAllSongs(req, res){
@@ -38,6 +52,7 @@ function createSong(req, res){
               console.log('Error saving playlist to database.');
               res.status(500).send('Internal server error.');
             }else{
+              broadcastUpdate(); // let all clients know there's a new song
               res.json(newSong);
             }
           });
@@ -62,6 +77,7 @@ function deleteSong(req, res){
             console.log('Error saving playlist after deleting song.', err);
             res.status(500).send('Internal server error.');
           }else{
+            broadcastUpdate(); // let all clients know a song was deleted
             res.json({});
           }
         });

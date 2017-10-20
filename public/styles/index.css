@@ -19,6 +19,8 @@ body {
 h1 {
   font-size: 60px;
   margin-top: 5%;
+  color:#90FFA4;
+  letter-spacing: 8px;
 }
 
 h2 {
@@ -56,6 +58,10 @@ h2 {
   border-color: black;
 }
 
+#playlistName:focus, #playlistDescr:focus {
+  outline: none;
+}
+
 #createPlaylistBtn {
   font-family: 'Comfortaa', cursive;
   font-size: 150%;
@@ -63,6 +69,7 @@ h2 {
   border: white;
   background-color: gray;
   padding: 1%;
+  border-radius: 10px 5% / 20px 30px;
 }
 
 #createPlaylistBtn:hover {

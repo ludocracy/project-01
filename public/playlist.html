@@ -9,11 +9,14 @@
   </head>
   <body>
     <header>
+      <div id="playlist-title">
       <h1 class="playlist-name"></h1>
       <h2 class="playlist-descr"></h2>
+    </div>
       <nav>
-        <a href="/">Go back</a>
+        <button id="go-home">Go Back Home</button>
       </nav>
+      <button id="deletePlaylistBtn">Delete playlist</button>
     </header>
     <div class="main">
       <div class="playlists-div">
@@ -22,20 +25,19 @@
           <input type="textarea" id="playlistDescr" placeholder="describe this playlist or leave blank" /> -->
 
           <!-- -->
-          <button id="deletePlaylistBtn">Delete playlist</button>
         </div>
         <div class="song-crud display-element">
           <div class="song-search">
             <form id="searchForm">
               <p>Search and Add Songs:</p>
-              <input type="text" id="songName" placeholder="new song name" />
+              <input type="text" id="songName" placeholder="New Song Name" />
               <button id="youtube-search-btn" type="submit" onclick="searchResultsToggle()">Search Youtube</button>
             </form>
-            <section id="youtube-search-res" style="visibility: hidden;">
+            <section id="youtube-search-res" style="display: none;">
               <div class="song-search-results">
 
               </div>
-              <button id="createSongBtn" onclick="searchResultsToggle()">Add song to playlist</button>
+              <button id="createSongBtn" onclick="searchResultsToggle()">Add Song to Playlist</button>
               <div id="song-search-thumbnail">
 
               </div>
@@ -44,11 +46,11 @@
         </div>
         <!-- <h3>Songs</h3> -->
         <div class="overflow-container">
-          <p>Select a song to play:</p>
+          <p id="select-prompt">Select A Song to Play:</p>
           <ul class="song-container">
 
         </ul>
-        <button id="deleteSongBtn">Delete song from playlist</button>
+        <button id="deleteSongBtn">Delete Song from Playlist</button>
         <div id="song-embed">
 
         </div></br>
