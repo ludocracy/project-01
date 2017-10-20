@@ -1,3 +1,12 @@
+// web socket setup
+var HOST = location.origin.replace(/^http/, 'ws').replace(/:\d{4}/, '');
+var ws = new WebSocket(`${HOST}:9090`);
+
+ws.onmessage = function (event) {
+  console.log('i hear you! getting an update!');
+  getSongs();
+}
+
 //
 // AJAX CALLS
 //
