@@ -4,23 +4,23 @@
 function onPlayerReady(event) {
   event.target.playVideo();
 }
-let playingSongIndex = 1;
+
+let playingSongId = '';
 function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.ENDED) {
-    // TODO play next song
-    let songs = $(`.songItem`);
-    if(playingSongIndex < songs.length) {
-      playingSongIndex++;
-    } else {
-      // TODO only loop if client chooses?
-      playingSongIndex = 1;
+  if (event.data === YT.PlayerState.PLAYING) {
+    playingSongId = player.getVideoData()['video_id'];
+  } else if (event.data === YT.PlayerState.ENDED) {
+    let lastSongLi = $(`.songItem[youtube-hash=${playingSongId}]`);
+    let nextSong = lastSongLi.next();
+    let songId = '';
+    if(nextSong.length) {
+      songId = nextSong.attr('youtube-hash');
+    } else if($(`.songItem`).length) {
+      songId = $(`.songItem:nth-child(1)`).attr('youtube-hash');
     }
-    let songLi = $(`.songItem:nth-child(${playingSongIndex})`)
-    let songId = songLi.attr('youtube-hash');
-    console.log();
     setUpPlayer(songId);
 
-    // TODO check for updates
+    getSongs();
   }
 }
 
@@ -89,6 +89,7 @@ function showSearchThumbnail() {
 }
 
 function setUpPlayer(videoId) {
+  if(!videoId) { return; }
   if(player) {
     player.loadVideoById(videoId);
   } else {

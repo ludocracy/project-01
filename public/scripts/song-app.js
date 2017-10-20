@@ -4,7 +4,7 @@
 function getSongs() {
   $.ajax({
     method: 'GET',
-    url: `/playlists/${PID}/songs`,
+    url: `/playlists/${PID}`,
     dataType: 'json',
     success: displaySongs,
     error: (err) => { console.log(err); }
