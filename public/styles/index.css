@@ -1,6 +1,7 @@
 body {
   font: verdana sans-serif;
 
+  background-color: #C02942;
   background-image: url('https://media.giphy.com/media/2yTyH3lEt6LRe/giphy.gif');
   background-position: center;
   background-repeat: no-repeat;
@@ -19,7 +20,7 @@ body {
 h1 {
   font-size: 60px;
   margin-top: 5%;
-  color:#90FFA4;
+  color: white;
   letter-spacing: 8px;
 }
 

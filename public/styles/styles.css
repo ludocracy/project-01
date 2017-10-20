@@ -1,10 +1,10 @@
 /*TESTING*/
 .selectedSong {
-  background-color: #90FFA4;
+  background-color: grey;
 }
 
 .selectedSearchResult {
-  background-color: #90FFA4;
+  background-color: white;
 }
 
 .display-element{
@@ -19,23 +19,21 @@
 
 
 html {
-  background-color: #FFBFCA;
+  background-color: #C02942;
   height:99%;
   max-height: 95vh;
+  font-family: 'Comfortaa', cursive;
 }
 
 body {
+  font-family: 'Comfortaa', cursive;
   position:absolute;
   top:0;
   bottom:0;
   right:0;
   left:0;
-}
-
-body {
   margin: 30px;
   width: auto;
-  font-family: 'Roboto', sans-serif;
 }
 
 header{
@@ -51,6 +49,7 @@ main {
 }
 
 h1 {
+  color: white;
   font-size: 32px;
   font-weight: 500;
   margin-bottom: 10px;
@@ -73,7 +72,6 @@ button:hover {
 
 input:focus, button:focus{
   outline: none;
-  background-color: #FF5F72;
 }
 
 li{
@@ -89,22 +87,22 @@ li:hover {
 
 input {
   border-radius: 20px 30px / 10px 5%;
-  background-color: #90FFA4;
+  background-color: white;
   box-shadow: 2px 2px 1px black;
   padding: 0 7px;
 }
 
 p, #playlist-title {
-  color: #90FFA4;
+  color: white;
   text-shadow: 1px 0px 3px black;
-  text-transform: capitalize;
+  text-transform: lowercase;
 }
 
 /*Classes*/
 
 .song-search-results, .song-container{
   opacity: 1;
-  background-color: #FF5F72;
+  background-color: white;
   border-radius: 10px 20px / 5px 5%;
   padding: 10px;
   margin: 3px;
