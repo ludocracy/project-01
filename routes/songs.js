@@ -3,10 +3,11 @@ const Schema = mongoose.Schema;
 const db = require('../models');
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 // set up sockets!!!
 const WebSocketServer = require('ws').Server;
-const wss = new WebSocketServer({ port: 9090 });
+const wss = new WebSocketServer({ port: process.env.SOCKET_PORT });
 
 // posts 'update' to all clients, prompting them to get the latest songs
 function broadcastUpdate() {
