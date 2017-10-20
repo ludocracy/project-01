@@ -41,6 +41,15 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+header {
+  display: inline;
+  text-align: right;
+}
+
+nav {
+  text-align: left;
+}
+
 main {
   display: flex;
   flex-direction: row;
@@ -120,11 +129,15 @@ h1 {
 #thumbnail-photo{
   max-width: 100%;
   max-height: 100%;
-  min-width: 100%;
+  text-align: center;
 }
 
-#createSongBtn, #deleteSongBtn {
+#select-prompt {
 
+}
+
+#show-prompt {
+  display: none;
 }
 
 .overflow-container {
@@ -134,7 +147,7 @@ h1 {
   /*overflow-y: hidden;*/
 }
 
-@media only screen and (max-width: 800px){
+@media only screen and (max-width: 500px){
   html{
     text-align: center;
   }
@@ -145,4 +158,13 @@ h1 {
     width: 100%;
     max-width: inherit;
   }
+
+  #song-embed, #select-prompt{
+    display: none;
+  }
+
+  #show-prompt{
+    display: block;
+  }
+
 }

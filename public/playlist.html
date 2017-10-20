@@ -31,7 +31,7 @@
               <input type="text" id="songName" placeholder="new song name" />
               <button id="youtube-search-btn" type="submit" onclick="searchResultsToggle()">Search Youtube</button>
             </form>
-            <section id="youtube-search-res" style="visibility: hidden;">
+            <section id="youtube-search-res" style="display: none;">
               <div class="song-search-results">
 
               </div>
@@ -44,7 +44,8 @@
         </div>
         <!-- <h3>Songs</h3> -->
         <div class="overflow-container">
-          <p>Select a song to play:</p>
+          <p id="select-prompt">Select a song to play:</p>
+          <p id="show-prompt">Songs currently in playlist:</p>
           <ul class="song-container">
 
         </ul>
