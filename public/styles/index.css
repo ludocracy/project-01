@@ -1,0 +1,71 @@
+body {
+  font: verdana sans-serif;
+
+  background: url('../images/share.svg') repeat;
+  background-size: 10%;
+  background-color: pink;
+
+  font-family: "Helvetica", sans-serif;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+}
+
+h1 {
+  color: black;
+  font-size: 400%;
+
+  margin-top: 5%;
+}
+
+h2 {
+  color: black;
+  font-size: 300%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.playlist-crud {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-content: space-between;
+}
+
+#playlistName, #playlistDescr {
+  font-size: 200%;
+  padding: 1%;
+  margin: 3% 3%;
+  text-align: center;
+  border-width: 4px;
+}
+
+#playlistName:hover, #playlistDescr:hover {
+  border-color: black;
+}
+
+#createPlaylistBtn {
+  font-size: 150%;
+  color: white;
+  border: white;
+  background-color: gray;
+  padding: 1%;
+}
+
+#createPlaylistBtn:hover {
+  background-color: black;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  text-align: center;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  text-align: center;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  text-align: center;
+}
+:-moz-placeholder { /* Firefox 18- */
+  text-align: center;
+}
