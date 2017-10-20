@@ -1,6 +1,5 @@
 $(document).ready(function(){
   $('#initialPlaylistForm').click(postPlaylist);
-
   // note: we need this for admin page
   // getAllPlaylists();
 });
