@@ -1,6 +1,6 @@
 // web socket setup
 var HOST = location.origin.replace(/^http/, 'ws').replace(/:\d{4}/, '');
-HOST = HOST.match('localhost') ? `${HOST}:9090` : 'wss://kollaboscope.herokuapp.com:9090';
+HOST = HOST.match('localhost') ? `${HOST}:9090` : 'wss://kollaboscope.herokuapp.com';
 var ws = new WebSocket(HOST);
 
 ws.onmessage = function (event) {
