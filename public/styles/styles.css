@@ -170,11 +170,11 @@ h1 {
   /*overflow-y: hidden;*/
 }
 
-/*@media only (min-width: 500px) and (max-width:1180){
+@media only (min-width: 500px) and (max-width:1180){
   #thumbnail-photo{
     display: none;
   }
-}*/
+}
 @media only screen and (max-width: 1190px){
   #thumbnail-photo{
     max-width: 75%
