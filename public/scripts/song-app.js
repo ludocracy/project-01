@@ -3,7 +3,7 @@ var HOST = location.origin.replace(/^http/, 'ws').replace(/:\d{4}/, '');
 var ws = new WebSocket(`${HOST}:3000`);
 
 ws.onmessage = function (event) {
-  console.log('i hear you! getting an update!');
+  console.log('we have an update! getting new songs...');
   getSongs();
 }
 

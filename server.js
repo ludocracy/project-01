@@ -39,9 +39,7 @@ server.on('request', app);
 
 // posts 'update' to all clients, prompting them to get the latest songs
 function broadcastUpdate(req, res, next) {
-  console.log('broadcastUpdate');
   wss.clients.forEach(function each(client) { // iterating through all clients to notify
-    console.log('broadcasting!');
     client.send("update");
   });
   next();
