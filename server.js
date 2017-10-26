@@ -3,7 +3,9 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   Routes = require('./routes'),
   app = express(),
-  morgan = require('morgan');
+  morgan = require('morgan'),
+  server = require('http').createServer(),
+  WebSocketServer = require('ws').Server;
 
 // ENVIRONMENT
 require('dotenv').config();
@@ -25,14 +27,27 @@ app.put('/playlists/:id', Routes.Playlists.updatePlaylist);
 app.delete('/playlists/:id', Routes.Playlists.deletePlaylist);
 
 app.get('/playlists/:id', Routes.Playlists.getOnePlaylist);
-// when playlist is created, redirect to created playlist page
 app.get('/:id', Routes.playlist);
 
 app.get('/playlists/:id/songs', Routes.Songs.getAllSongs);
-app.post('/playlists/:id/songs', Routes.Songs.createSong);
+app.post('/playlists/:id/songs', Routes.Songs.createSong, broadcastUpdate);
 app.delete('/playlists/:pid/songs/:sid', Routes.Songs.deleteSong);
 
+// set up connection between api server and socket server
+const wss = new WebSocketServer({ server: server });
+server.on('request', app);
+
+// posts 'update' to all clients, prompting them to get the latest songs
+function broadcastUpdate(req, res, next) {
+  console.log('broadcastUpdate');
+  wss.clients.forEach(function each(client) { // iterating through all clients to notify
+    console.log('broadcasting!');
+    client.send("update");
+  });
+  next();
+}
+
 // START SERVER
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });
